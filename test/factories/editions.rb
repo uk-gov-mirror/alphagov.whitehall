@@ -3,6 +3,7 @@ require_relative '../support/generic_edition'
 FactoryBot.define do
   factory :edition, class: GenericEdition, traits: [:translated] do
     creator
+    document
     sequence(:title) { |index| "edition-title-#{index}" }
     body { "edition-body" }
     change_note { "change-note" }
@@ -127,10 +128,6 @@ FactoryBot.define do
       attachments { FactoryBot.build_list :file_attachment, 1 }
     end
 
-    trait(:with_document) do
-      document
-    end
-
     trait(:unpublished) do
       after(:create) do |edition|
         edition.unpublishing = build(:unpublishing, edition: edition)
@@ -165,7 +162,6 @@ FactoryBot.define do
 
   factory :announcement, parent: :edition, class: Announcement, traits: %i[with_organisations with_topics]
 
-  factory :edition_with_document, parent: :edition, traits: [:with_document]
   factory :imported_edition, parent: :edition, traits: [:imported]
   factory :draft_edition, parent: :edition, traits: [:draft]
   factory :submitted_edition, parent: :edition, traits: [:submitted]

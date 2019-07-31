@@ -12,7 +12,6 @@ FactoryBot.define do
       if evaluator.relevant_to_local_government
         document = create(
           :published_policy,
-          :with_document,
           relevant_to_local_government: true
         ).document
         news_article.related_documents << document

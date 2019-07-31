@@ -6,7 +6,7 @@ class Admin::DocumentsControllerTest < ActionController::TestCase
 
   def setup
     login_as :user
-    @document = create(:edition, :with_document).document
+    @document = create(:edition).document
     @url_maker = Whitehall::UrlMaker.new(host: Plek.find('whitehall'))
   end
 

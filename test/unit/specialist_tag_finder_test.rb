@@ -5,7 +5,7 @@ class SpecialistTagFinderTest < ActiveSupport::TestCase
   include GdsApi::TestHelpers::ContentStore
 
   test "#topics returns all linked topics" do
-    edition = create(:edition_with_document)
+    edition = create(:edition)
     edition_base_path = Whitehall.url_maker.public_document_path(edition)
     content_item = content_item_for_base_path(edition_base_path)
                      .merge(
@@ -25,7 +25,7 @@ class SpecialistTagFinderTest < ActiveSupport::TestCase
   end
 
   test "#topics returns empty array if no content item found" do
-    edition = create(:edition_with_document)
+    edition = create(:edition)
     edition_base_path = Whitehall.url_maker.public_document_path(edition)
 
     content_store_does_not_have_item(edition_base_path)
@@ -34,7 +34,7 @@ class SpecialistTagFinderTest < ActiveSupport::TestCase
   end
 
   test "#topics returns empty array if content item has no topics link" do
-    edition = create(:edition_with_document)
+    edition = create(:edition)
     edition_base_path = Whitehall.url_maker.public_document_path(edition)
     content_item = content_item_for_base_path(edition_base_path).merge!(
       "links" => { "other" => [] }
@@ -46,7 +46,7 @@ class SpecialistTagFinderTest < ActiveSupport::TestCase
   end
 
   test "#top_level_topic returns the parent of the edition's parent topic" do
-    edition = create(:edition_with_document)
+    edition = create(:edition)
     edition_base_path = Whitehall.url_maker.public_document_path(edition)
     parent_base_path = "/parent-item"
     edition_content_item = content_item_for_base_path(edition_base_path)
@@ -73,7 +73,7 @@ class SpecialistTagFinderTest < ActiveSupport::TestCase
   end
 
   test "#top_level_topic falls back to expanded_links on the parent if links aren't present" do
-    edition = create(:edition_with_document)
+    edition = create(:edition)
     edition_base_path = Whitehall.url_maker.public_document_path(edition)
     parent_base_path = "/parent-item"
     edition_content_item = content_item_for_base_path(edition_base_path).merge!(
@@ -94,7 +94,7 @@ class SpecialistTagFinderTest < ActiveSupport::TestCase
   end
 
   test "#top_level_topic returns nil if no parents" do
-    edition = create(:edition_with_document)
+    edition = create(:edition)
     edition_base_path = Whitehall.url_maker.public_document_path(edition)
     edition_content_item = content_item_for_base_path(edition_base_path).merge!("links" => {})
 
@@ -104,7 +104,7 @@ class SpecialistTagFinderTest < ActiveSupport::TestCase
   end
 
   test "#top_level_topic returns nil if no content item found" do
-    edition = create(:edition_with_document)
+    edition = create(:edition)
     edition_base_path = Whitehall.url_maker.public_document_path(edition)
 
     content_store_does_not_have_item(edition_base_path)

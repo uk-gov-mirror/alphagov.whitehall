@@ -6,7 +6,7 @@ class Admin::NeedsControllerTest < ActionController::TestCase
 
   def setup
     login_as :user
-    @document = create(:edition, :with_document).document
+    @document = create(:edition).document
     @url_maker = Whitehall::UrlMaker.new(host: Plek.find('whitehall'))
 
     @need_1 = {
@@ -33,7 +33,7 @@ class Admin::NeedsControllerTest < ActionController::TestCase
   end
 
   test "associate user needs with a document" do
-    edition = create(:edition_with_document)
+    edition = create(:edition)
     document = edition.document
     need_content_ids = [SecureRandom.uuid, SecureRandom.uuid]
 
@@ -48,7 +48,7 @@ class Admin::NeedsControllerTest < ActionController::TestCase
   end
 
   view_test "should be possible to update needs for a published edition" do
-    edition = create(:edition_with_document)
+    edition = create(:edition)
     document = edition.document
 
     get :edit, params: { content_id: document.content_id, edition_id: edition.id }

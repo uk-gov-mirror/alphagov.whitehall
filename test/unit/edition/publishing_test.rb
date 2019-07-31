@@ -151,7 +151,7 @@ class Edition::PublishingTest < ActiveSupport::TestCase
   end
 
   test '#unpublished_edition returns unpublished edition if unpublished' do
-    edition = create(:draft_edition, :with_document)
+    edition = create(:draft_edition)
     edition.build_unpublishing(edition: edition)
 
     assert_equal edition, edition.unpublished_edition
