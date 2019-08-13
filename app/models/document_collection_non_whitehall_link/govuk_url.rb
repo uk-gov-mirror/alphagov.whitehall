@@ -19,10 +19,7 @@ class DocumentCollectionNonWhitehallLink::GovukUrl
       content_item.slice("base_path", "content_id", "publishing_app", "title")
     )
 
-    DocumentCollectionGroupMembership.create!(
-      document_collection_group: document_collection_group,
-      non_whitehall_link: non_whitehall_link,
-    )
+    document_collection_group.memberships.create!(non_whitehall_link: non_whitehall_link)
   end
 
   def title
@@ -49,12 +46,10 @@ private
     end
 
     @content_item = Services.publishing_api.get_content(content_id).to_h
-
-    errors.add(:url, 'must reference a GOV.UK page') unless content_item
   rescue URI::InvalidURIError
     errors.add(:url, 'must be a valid GOV.UK URL')
   rescue GdsApi::HTTPNotFound
-    errors.add(:url, 'must be a valid GOV.UK URL')
+    errors.add(:url, 'must reference a GOV.UK page')
   rescue GdsApi::HTTPIntermittentServerError
     errors.add(:base, 'Link lookup failed, please try again later')
   end
