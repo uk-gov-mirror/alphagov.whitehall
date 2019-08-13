@@ -7,9 +7,9 @@
 <h1><%= @collection.title %></h1>
 
 <%= edition_editing_tabs(@collection) do %>
+  <%= render partial: 'collection_size_warning' %>
   <%= form_tag admin_document_collection_new_whitehall_member_path(@collection) do %>
     <h2>Add document to a group</h2>
-    <%= render partial: 'collection_size_warning' %>
     <div id="document-finder" class="document-finder form-inline well remove-top-margin">
       <label for="title">Add</label>
       <div class="document-finder-fields">
@@ -28,17 +28,21 @@
     </div>
   <% end %>
 
-  <%= form_tag admin_document_collection_new_non_whitehall_member_path(@collection), class: 'document-finder' do %>
-    <h2>Add GOV.UK content created outside of Whitehall to a group</h2>
-    <div class="document-finder form-inline well remove-top-margin">
-      <label for="url">Add</label>
-      <%= text_field_tag :url, '', placeholder: 'GOV.UK URL', class: 'form-control input-sm' %>
-      to the
-      <%= select_tag :group_id, options_from_collection_for_select(@groups, :id, :heading, session[:document_collection_selected_group_id]), class: 'form-control input-sm' %>
-      group
-      <%= submit_tag 'Add', class: 'btn btn-sm btn-info' %>
-    </div>
-  <% end %>
+  <details class="non-whitehall-disclosure"<% if flash[:open_non_whitehall] %> open<% end %>>
+    <summary>
+      Add GOV.UK content created outside of Whitehall to a group
+    </summary>
+    <%= form_tag admin_document_collection_new_non_whitehall_member_path(@collection), class: 'document-finder' do %>
+      <div class="document-finder form-inline well remove-top-margin">
+        <label for="url">Add</label>
+        <%= text_field_tag :url, flash[:url], placeholder: 'GOV.UK URL', class: 'form-control input-sm' %>
+        to the
+        <%= select_tag :group_id, options_from_collection_for_select(@groups, :id, :heading, session[:document_collection_selected_group_id]), class: 'form-control input-sm' %>
+        group
+        <%= submit_tag 'Add', class: 'btn btn-sm btn-info' %>
+      </div>
+    <% end %>
+  </details>
 
   <div class="js-group-container">
     <div class="reorder-buttons">

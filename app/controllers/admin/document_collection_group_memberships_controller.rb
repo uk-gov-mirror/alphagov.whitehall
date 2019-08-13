@@ -21,6 +21,8 @@ class Admin::DocumentCollectionGroupMembershipsController < Admin::BaseControlle
       redirect_to admin_document_collection_groups_path(@collection),
                   notice: "'#{govuk_link.title}' added to '#{@group.heading}'"
     else
+      flash[:url] = params[:url]
+      flash[:open_non_whitehall] = true
       redirect_to admin_document_collection_groups_path(@collection),
                   alert: govuk_link.errors.full_messages.join(". ") + '.'
     end
