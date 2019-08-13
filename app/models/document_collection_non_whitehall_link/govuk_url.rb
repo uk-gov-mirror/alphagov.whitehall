@@ -1,0 +1,2 @@
+class DocumentCollectionNonWhitehallLink::GovukUrl
+end
