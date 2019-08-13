@@ -20,28 +20,30 @@ When(/^I draft a new document collection called "(.*?)"$/) do |title|
   @document_collection = DocumentCollection.find_by!(title: title)
 end
 
-When(/^I add the non whitehall url "(.*?)" to the document collection$/) do |url|
+When(/^I add the non whitehall url "(.*?)" for "(.*?)" to the document collection$/) do |url, title|
   visit admin_document_collection_path(@document_collection)
   click_on "Edit draft"
   click_on "Collection documents"
 
-  stub_publishing_api_has_lookups("/government/news/test" => "51ac4247-fd92-470a-a207-6b852a97f2db")
+  base_path = URI.parse(url).path
+  content_id = SecureRandom.uuid
+
+  stub_publishing_api_has_lookups(base_path => content_id)
   res = stub_publishing_api_has_item(
-    content_id: "51ac4247-fd92-470a-a207-6b852a97f2db",
-    base_path: "/government/news/test",
+    content_id: content_id,
+    base_path: base_path,
     publishing_app: "content-publisher",
-    title: "King Content Publisher"
+    title: title
   )
 
-  within '#url-form' do
+  within '.non-whitehall-disclosure' do
+    find('summary').click
     fill_in 'url', with: url
     click_on 'Add'
   end
 
-  response = JSON.parse(res.response.body)
-
   within 'section.group' do
-    assert page.has_content? response['title']
+    assert page.has_content? title
   end
 end
 

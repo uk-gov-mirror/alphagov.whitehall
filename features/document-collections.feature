@@ -17,7 +17,7 @@ Feature: Grouping documents into a collection
   @javascript
   Scenario: Admin creates a document collection with non whitehall links.
     Given a document collection "Some super collection" exists
-    And I add the non whitehall url "https://www.gov.uk/king-content-publisher" to the document collection
+    And I add the non whitehall url "https://www.gov.uk/king-content-publisher" for "King Content Publisher" to the document collection
     Then I can see in the admin that "King Content Publisher" is part of the document collection
 
   @javascript
