@@ -28,7 +28,7 @@
     </div>
   <% end %>
 
-  <%= form_tag admin_document_collection_new_non_whitehall_member_path(@collection), class: 'document-finder' do %>
+  <%= form_tag admin_document_collection_new_non_whitehall_member_path(@collection), class: 'document-finder', id: 'url-form' do %>
     <h2>Add GOV.UK content created outside of Whitehall to a group</h2>
     <div class="document-finder form-inline well remove-top-margin">
       <label for="url">Add</label>

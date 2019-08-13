@@ -20,6 +20,31 @@ When(/^I draft a new document collection called "(.*?)"$/) do |title|
   @document_collection = DocumentCollection.find_by!(title: title)
 end
 
+When(/^I add the non whitehall url "(.*?)" to the document collection$/) do |url|
+  visit admin_document_collection_path(@document_collection)
+  click_on "Edit draft"
+  click_on "Collection documents"
+
+  stub_publishing_api_has_lookups("/government/news/test" => "51ac4247-fd92-470a-a207-6b852a97f2db")
+  res = stub_publishing_api_has_item(
+    content_id: "51ac4247-fd92-470a-a207-6b852a97f2db",
+    base_path: "/government/news/test",
+    publishing_app: "content-publisher",
+    title: "King Content Publisher"
+  )
+
+  within '#url-form' do
+    fill_in 'url', with: url
+    click_on 'Add'
+  end
+
+  response = JSON.parse(res.response.body)
+
+  within 'section.group' do
+    assert page.has_content? response['title']
+  end
+end
+
 When(/^I add the document "(.*?)" to the document collection$/) do |document_title|
   doc_edition = Edition.find_by!(title: document_title)
   refute @document_collection.nil?, "No document collection to act on."
