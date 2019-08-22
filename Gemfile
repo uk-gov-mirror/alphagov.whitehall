@@ -15,53 +15,60 @@ gem "equivalent-xml", "~> 0.6.0", require: false
 gem "faraday"
 gem "friendly_id", "~> 5.2.4"
 gem "fuzzy_match", "~> 2.1"
-gem "gds-sso", "~> 14.2"
-gem "globalize", "~> 5"
-gem "govuk_ab_testing", "~> 2.4x"
-gem "govuk_admin_template", "~> 6.7"
-gem "govuk_app_config", "~> 2.0"
-gem "govuk_publishing_components", "~> 21.13.1"
-gem "govuk_sidekiq", "~> 3"
-gem "invalid_utf8_rejector", "~> 0.0.4"
-gem "isbn_validation"
-gem "jbuilder"
-gem "jquery-ui-rails", "~> 4.2.1"
-gem "kaminari", "~> 1.1.1"
-gem "link_header"
-gem "mime-types", "~> 3.3"
-gem "mini_magick", "~> 4.9.5"
-gem "mlanett-redis-lock"
-gem "mysql2", "~> 0.4.10"
-gem "nokogiri", "~> 1.10.5"
-gem "parallel"
-gem "pdf-reader", "~> 2.2"
-gem "plek", "~> 3.0"
-gem "ptools"
-gem "rack", "~> 2.0"
-gem "rack_strip_client_ip", "~> 0.0.2"
-gem "rails", "~> 5.1"
-gem "rails-i18n", "~> 5.1"
-gem "rails_translation_manager", "~> 0.1.0"
-gem "rake", "12.3.3"
-gem "record_tag_helper", "~> 1.0"
-gem "redis-namespace"
-gem "responders", "~> 3.0"
-gem "rinku", require: "rails_rinku"
-gem "ruby-progressbar", require: false
-gem "rubyzip", "~> 1.3"
-gem "sass", "~> 3.7"
-gem "sassc-rails", "~> 2.1"
-gem "shared_mustache", "~> 1.0.0"
-gem "sidekiq-scheduler", "~> 3.0"
-gem "slimmer", "~> 13.2"
-gem "sprockets", "~> 3.7"
-gem "sprockets-rails"
-gem "transitions", require: ["transitions", "active_record/transitions"]
-gem "uglifier", "~> 4.2"
-gem "validates_email_format_of"
-gem "whenever", "~> 1.0.0", require: false
-if ENV["GDS_API_ADAPTERS_DEV"]
-  gem "gds-api-adapters", path: "../gds-api-adapters"
+gem 'gds-sso', '~> 14.2'
+gem 'globalize', '~> 5'
+gem 'govuk_ab_testing', '~> 2.4x'
+gem 'govuk_admin_template', '~> 6.7'
+gem 'govuk_app_config', '~> 2.0'
+gem 'govuk_publishing_components', '~> 21.13.1'
+gem 'govuk_sidekiq', '~> 3'
+gem 'invalid_utf8_rejector', '~> 0.0.4'
+gem 'isbn_validation'
+gem 'jbuilder'
+gem 'jquery-ui-rails', '~> 4.2.1'
+gem 'kaminari', '~> 1.1.1'
+gem 'link_header'
+gem 'logstasher', '~> 1.3.0'
+gem 'mime-types', '~> 3.3'
+gem 'mini_magick', '~> 4.9.5'
+gem 'mlanett-redis-lock'
+gem 'mysql2', '~> 0.4.10'
+gem 'nokogiri', '~> 1.10.4'
+gem 'parallel'
+gem 'pdf-reader', '~> 2.2'
+gem 'plek', '~> 3.0'
+gem 'ptools'
+gem 'rack', '~> 2.0'
+gem 'rack_strip_client_ip', '~> 0.0.2'
+gem 'rails', '~> 5.2'
+gem 'rails-i18n', '~> 5.1'
+gem 'rails_translation_manager', '~> 0.1.0'
+gem 'raindrops', '0.19.0'
+gem 'rake', '12.3.3'
+gem 'record_tag_helper', '~> 1.0'
+gem 'redis-namespace'
+gem 'responders', '~> 3.0'
+gem 'rinku', require: 'rails_rinku'
+gem 'ruby-progressbar', require: false
+gem 'rubyzip', '~> 1.3'
+gem 'sass', '~> 3.7'
+gem 'sassc-rails', '~> 2.1'
+gem 'shared_mustache', '~> 1.0.0'
+gem 'sidekiq-scheduler', '~> 3.0'
+gem 'slimmer', '~> 13.2'
+gem 'sprockets', '~> 3.7'
+gem 'sprockets-rails'
+gem 'statsd-ruby', '~> 1.4.0', require: 'statsd'
+gem 'transitions', require: ['transitions', 'active_record/transitions']
+gem 'typhoeus', '~> 1.3'
+gem 'uglifier', '~> 4.2'
+gem 'unicorn', '5.5.1'
+gem 'validates_email_format_of'
+gem 'whenever', '~> 1.0.0', require: false
+
+# rubocop:disable Bundler/DuplicatedGem
+if ENV['GDS_API_ADAPTERS_DEV']
+  gem 'gds-api-adapters', path: '../gds-api-adapters'
 else
   gem "gds-api-adapters"
 end
