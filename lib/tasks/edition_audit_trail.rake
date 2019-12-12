@@ -139,4 +139,16 @@ namespace :edition_audit_trail do
       puts fact_check_responses(edition) if edition.can_be_fact_checked?
     end
   end
+
+  task test: [:environment] do
+    document = Document.last
+
+    puts document.to_json(
+      include: {
+        editions: {
+          include: :versions
+        }
+      }
+    )
+  end
 end
