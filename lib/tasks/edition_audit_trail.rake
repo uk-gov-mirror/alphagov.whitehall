@@ -92,7 +92,7 @@ def fact_check_responses(edition)
 end
 
 namespace :edition_audit_trail do
-  limit = 5000
+  limit = 50
 
   task history_examples: [:environment] do
     actions = %W(Archived Created Deleted Draft Editioned Imported
@@ -146,8 +146,29 @@ namespace :edition_audit_trail do
     puts document.to_json(
       include: {
         editions: {
-          include: :versions
-        }
+          include: {
+            editorial_remarks: { include: {
+                author: {}
+              }
+            },
+            edition_authors: {},
+            authors: {},
+            classification_featurings: {},
+            link_check_reports: {},
+            edition_dependencies: {},
+            depended_upon_contacts: {},
+            depended_upon_editions: {}
+          }
+        },
+        edition_relations: {},
+        published_edition: {},
+        pre_publication_edition: {},
+        latest_edition: {},
+        document_sources: {},
+        document_collection_group_memberships: {},
+        document_collection_groups: {},
+        document_collections: {},
+        features: {}
       }
     )
   end
