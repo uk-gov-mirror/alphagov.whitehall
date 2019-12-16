@@ -141,35 +141,39 @@ namespace :edition_audit_trail do
   end
 
   task test: [:environment] do
-    document = Document.last
+    documents = []
 
-    puts document.to_json(
-      include: {
-        editions: {
-          include: {
-            editorial_remarks: { include: {
-                author: {}
-              }
-            },
-            edition_authors: {},
-            authors: {},
-            classification_featurings: {},
-            link_check_reports: {},
-            edition_dependencies: {},
-            depended_upon_contacts: {},
-            depended_upon_editions: {}
-          }
-        },
-        edition_relations: {},
-        published_edition: {},
-        pre_publication_edition: {},
-        latest_edition: {},
-        document_sources: {},
-        document_collection_group_memberships: {},
-        document_collection_groups: {},
-        document_collections: {},
-        features: {}
-      }
-    )
+    Document.all.limit(4).each do |document|
+      documents << document.as_json(
+        include: {
+          editions: {
+            include: {
+              editorial_remarks: { include: {
+                  author: {}
+                }
+              },
+              edition_authors: {},
+              authors: {},
+              classification_featurings: {},
+              link_check_reports: {},
+              edition_dependencies: {},
+              depended_upon_contacts: {},
+              depended_upon_editions: {}
+            }
+          },
+          edition_relations: {},
+          published_edition: {},
+          pre_publication_edition: {},
+          latest_edition: {},
+          document_sources: {},
+          document_collection_group_memberships: {},
+          document_collection_groups: {},
+          document_collections: {},
+          features: {}
+        }
+      )
+    end
+
+    puts documents.to_json
   end
 end
