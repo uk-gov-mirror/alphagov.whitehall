@@ -19,12 +19,12 @@ class Admin::Export::DocumentController < Admin::Export::BaseController
 
   def lock
     document = Document.find(params[:id])
-    document.update!(locked: true)
+    document.update_column(:locked, true)
   end
 
   def unlock
     document = Document.find(params[:id])
-    document.update!(locked: false)
+    document.update_column(:locked, false)
   end
 
   def migrated
