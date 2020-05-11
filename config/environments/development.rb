@@ -1,5 +1,31 @@
+require "govuk_app_config"
+
 Whitehall::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+
+  config.before_initialize do
+    # TODO remove this:
+    GovukLogging.configure
+
+    ::ActionDispatch::DebugExceptions.class_eval do
+    private
+      def log_error(request, wrapper)
+        logger = logger(request)
+        return unless logger
+
+        exception = wrapper.exception
+
+        trace = wrapper.application_trace
+        trace = wrapper.framework_trace if trace.empty?
+
+        logger.fatal({
+          exception_class: exception.class.to_s,
+          exception_message: exception.message,
+          stacktrace: trace,
+        }.to_json)
+      end
+    end
+  end
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -13,7 +39,7 @@ Whitehall::Application.configure do
   config.eager_load = false
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local       = false
   config.action_controller.perform_caching = false
   config.action_controller.action_on_unpermitted_parameters = :raise
 
@@ -79,4 +105,10 @@ Whitehall::Application.configure do
   if ENV["SHOW_PRODUCTION_IMAGES"]
     config.asset_host = "https://assets.publishing.service.gov.uk"
   end
+
+  # Enable JSON-style logging
+  config.logstasher.enabled = true
+  config.logstasher.logger = Logger.new(Rails.root.join("log/#{Rails.env}.json.log"))
+  config.logstasher.suppress_app_log = true
+  config.log_tags = [:request_id]
 end
