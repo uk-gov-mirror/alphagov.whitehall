@@ -29,10 +29,7 @@ module LeadImagePresenterHelper
 private
 
   def placeholder_image_url
-    ActionController::Base.helpers.image_url(
-      "placeholder.jpg",
-      host: Whitehall.public_root,
-    )
+    ActionController::Base.helpers.image_path("placeholder.jpg")
   end
 
   def image_url
