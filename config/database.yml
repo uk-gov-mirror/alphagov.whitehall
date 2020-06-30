@@ -1,5 +1,9 @@
+common: &common
+  encoding: utf8mb4
+  collation: utf8mb4_bin
+
 development:
-  encoding: utf8
+  <<: *common
   adapter: mysql2
   database: whitehall_development
   username: whitehall
@@ -10,7 +14,7 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test: &test
-  encoding: utf8
+  <<: *common
   adapter: mysql2
   database: whitehall_test<%= "_executor_#{ENV['EXECUTOR_NUMBER']}_" if ENV['EXECUTOR_NUMBER']%><%= ENV['TEST_ENV_NUMBER'] %>
   username: whitehall
@@ -18,7 +22,7 @@ test: &test
   url: <%= ENV["TEST_DATABASE_URL"] %><%= ENV['TEST_ENV_NUMBER'] if ENV["TEST_DATABASE_URL"] %>
 
 production:
-  encoding: utf8
+  <<: *common
   adapter: mysql2
   database: whitehall_production
   pool: 10
