@@ -7,14 +7,13 @@ class PublishingApiDiscardDraftWorkerTest < ActiveSupport::TestCase
   def setup
     @edition = create(:draft_case_study)
     WebMock.reset!
+    @successful_discard_request = stub_publishing_api_discard_draft(@edition.content_id)
   end
 
-  test "registers a draft edition with the publishing api" do
-    request = stub_publishing_api_discard_draft(@edition.content_id)
-
+  test "calls discard draft on the publishing api" do
     PublishingApiDiscardDraftWorker.new.perform(@edition.content_id, "en")
 
-    assert_requested request
+    assert_requested @successful_discard_request
   end
 
   test "gracefully handles the deletion of an already-deleted draft edition" do
@@ -30,6 +29,30 @@ class PublishingApiDiscardDraftWorkerTest < ActiveSupport::TestCase
     request = stub_any_publishing_api_call_to_return_not_found
 
     PublishingApiDiscardDraftWorker.new.perform(@edition.content_id, "en")
+
+    assert_requested request
+  end
+
+  test "un-reserves a base path when provided with one" do
+    request = stub_publishing_api_unreserve_path("/path-to-unreserve", "whitehall")
+
+    PublishingApiDiscardDraftWorker.new.perform(@edition.content_id, "en", "/path-to-unreserve")
+
+    assert_requested request
+  end
+
+  test "gracefully handles unreserving a path that is not known to the Publishing API" do
+    request = stub_publishing_api_unreserve_path_not_found("/path-to-unreserve", "whitehall")
+
+    PublishingApiDiscardDraftWorker.new.perform(@edition.content_id, "en", "/path-to-unreserve")
+
+    assert_requested request
+  end
+
+  test "gracefully handles unreserving a path that is reserved by a different app" do
+    request = stub_publishing_api_unreserve_path_invalid("/path-to-unreserve", "whitehall")
+
+    PublishingApiDiscardDraftWorker.new.perform(@edition.content_id, "en", "/path-to-unreserve")
 
     assert_requested request
   end
