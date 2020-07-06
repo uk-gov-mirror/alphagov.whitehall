@@ -45,11 +45,22 @@ class EditionDeleterTest < ActiveSupport::TestCase
     assert edition.deleted?, "Edition should be deleted"
   end
 
-  test "#perform! changes the slug after deleting the edition" do
+  test "#perform! changes the slug" do
     edition = create(:draft_edition, title: "Just A Test")
 
     assert EditionDeleter.new(edition).perform!
     edition.reload
+    assert_equal "deleted-just-a-test", edition.slug
+  end
+
+  test "#perform! updates the Publishing API with the editions unchanged slug" do
+    edition = create(:draft_edition, title: "Just A Test")
+    unreserve_path_request = stub_publishing_api_unreserve_path(
+      "/government/generic-editions/just-a-test",
+    )
+
+    Sidekiq::Testing.inline! { EditionDeleter.new(edition).perform! }
+    assert_requested unreserve_path_request
     assert_equal "deleted-just-a-test", edition.slug
   end
 
