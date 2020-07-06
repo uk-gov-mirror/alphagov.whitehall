@@ -341,6 +341,31 @@ class Whitehall::PublishingApiTest < ActiveSupport::TestCase
     assert_requested gone_request
   end
 
+  test ".discard_draft_asnyc queues workers for each locale" do
+    edition = create(:publication,
+                     :translated,
+                     title: "To discard",
+                     primary_locale: "en",
+                     translated_into: "cy")
+    PublishingApiDiscardDraftWorker
+      .expects(:perform_async)
+      .with(edition.content_id, :en, "/government/publications/to-discard")
+    PublishingApiDiscardDraftWorker
+      .expects(:perform_async)
+      .with(edition.content_id, :cy, "/government/publications/to-discard.cy")
+    Whitehall::PublishingApi.discard_draft_async(edition)
+  end
+
+  test ".discard_draft_asnyc doesn't pass a base_path to discard to the worker "\
+    "when a document has been published" do
+    published_edition = create(:published_edition)
+    draft_edition = create(:draft_edition, document: published_edition.document)
+    PublishingApiDiscardDraftWorker
+      .expects(:perform_async)
+      .with(draft_edition.content_id, :en, nil)
+    Whitehall::PublishingApi.discard_draft_async(draft_edition)
+  end
+
   test ".unpublish_async queues a PublishingApiUnpublishingWorker job for the unpublishing" do
     unpublishing = build(:unpublishing, id: 1)
     PublishingApiUnpublishingWorker.expects(:perform_async).with(1)

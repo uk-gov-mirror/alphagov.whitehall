@@ -157,8 +157,15 @@ module Whitehall
     end
 
     def self.discard_draft_async(edition)
+      unreserve_paths = !edition.document.published?
+
       locales_for(edition).each do |locale|
-        PublishingApiDiscardDraftWorker.perform_async(edition.content_id, locale)
+        base_path = Whitehall.url_maker.public_document_path(edition, locale: locale)
+        PublishingApiDiscardDraftWorker.perform_async(
+          edition.content_id,
+          locale,
+          unreserve_paths ? base_path : nil,
+        )
       end
     end
 
