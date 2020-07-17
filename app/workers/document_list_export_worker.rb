@@ -13,21 +13,8 @@ class DocumentListExportWorker < WorkerBase
 
 private
 
-  def send_mail(csv_filename, user, filter)
-    Notifications.document_list(csv_filename, user.email, filter.page_title).deliver_now
-  end
-
-  def upload_file(csv, type)
-    export_id = SecureRandom.uuid
-    document_type_slug = if type.present?
-                           type.downcase.gsub(%r{[^a-z0-9]+}, "_")
-                         else
-                           "documents"
-                         end
-
-    filename = DocumentListExportPresenter.s3_filename(document_type_slug, export_id)
-    S3FileHandler.save_file_to_s3(filename, csv)
-    Plek.find("whitehall-admin", external: true) + "/export/#{document_type_slug}/#{export_id}"
+  def send_mail(csv, user, filter)
+    MailNotifications.document_list(csv, user.email, filter.page_title).deliver_now
   end
 
   def create_filter(filter_options, user)
