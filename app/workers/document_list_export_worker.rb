@@ -6,8 +6,7 @@ class DocumentListExportWorker < WorkerBase
     Tempfile.open("document_list_export_worker") do |file|
       file.unlink
       csv = generate_csv(filter, file)
-      public_url = upload_file(csv, filter_options[:type])
-      send_mail(public_url, user, filter)
+      send_mail(csv, user, filter)
     end
   end
 
