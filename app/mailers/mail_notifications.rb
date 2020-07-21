@@ -5,7 +5,7 @@ class MailNotifications < ApplicationMailer
   include ActionView::Helpers::TextHelper
   include Admin::EditionRoutesHelper
 
-  default from: "<ignored@null.invalid>"
+  default from: :no_reply_email_address
 
   def fact_check_request(request, url_options)
     @fact_check_request = request
