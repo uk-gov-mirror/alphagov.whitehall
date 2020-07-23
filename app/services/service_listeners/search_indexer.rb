@@ -2,10 +2,6 @@ module ServiceListeners
   SearchIndexer = Struct.new(:edition) do
     def index!
       if edition.can_index_in_search?
-        if edition.is_a?(Publication) && edition.has_changed_publication_type?
-          Whitehall::SearchIndex.delete(edition.previous_edition)
-        end
-
         Whitehall::SearchIndex.add(edition)
         reindex_collection_documents
       end
