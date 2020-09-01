@@ -257,6 +257,7 @@ private
         :alt_text,
         :caption,
         :_destroy,
+        :use_no_image,
         image_data_attributes: %i[file file_cache],
       ],
       consultation_participation_attributes: [

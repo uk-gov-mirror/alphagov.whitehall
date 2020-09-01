@@ -26,4 +26,8 @@ class CaseStudy < Edition
   def translatable?
     !non_english_edition?
   end
+
+  def use_no_image
+    return "image: null"
+  end
 end
