@@ -54,7 +54,8 @@ module PublishingApi
         first_public_at: first_public_at,
         format_display_type: item.display_type_key,
       }
-      details_hash[:image] = image_details if image_available?
+      # details_hash[:image] = image_details if image_available?
+      details_hash[:image] = { url: "", caption: nil, alt_text: "", }
       details_hash.merge!(PayloadBuilder::TagDetails.for(item))
       details_hash.merge!(PayloadBuilder::BrexitNoDealContent.for(item))
     end
