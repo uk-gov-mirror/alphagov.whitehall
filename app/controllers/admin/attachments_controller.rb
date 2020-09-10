@@ -110,6 +110,7 @@ private
     FileAttachment.new(attachment_params).tap do |file_attachment|
       file_attachment.build_attachment_data unless file_attachment.attachment_data
       file_attachment.attachment_data.attachable = attachable
+      file_attachment.attachment_data.uploaded_by_gds_editor = current_user.gds_editor?
     end
   end
 

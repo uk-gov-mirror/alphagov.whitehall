@@ -4,7 +4,7 @@ class AttachmentUploader < WhitehallUploader
 
   THUMBNAIL_GENERATION_TIMEOUT = 10.seconds
   FALLBACK_PDF_THUMBNAIL = File.expand_path("../assets/images/pub-cover.png", __dir__)
-  EXTENSION_WHITELIST = %w[chm csv diff doc docx dot dxf eps gif gml ics jpg kml odp ods odt pdf png ppt pptx ps rdf ris rtf sch txt vcf wsdl xls xlsm xlsx xlt xml xsd xslt zip].freeze
+  EXTENSION_BLOCKLIST = %w(chm csv diff doc docx dot dxf eps gif gml ics jpg kml odp ods odt pdf png ppt pptx ps rdf ris rtf sch txt vcf wsdl xls xlsm xlsx xlt xml xsd xslt zip).freeze
 
   before :cache, :validate_zipfile_contents!
 
@@ -80,7 +80,12 @@ class AttachmentUploader < WhitehallUploader
   end
 
   def extension_whitelist
-    EXTENSION_WHITELIST
+    if model.uploaded_by_gds_editor
+      EXTENSION_BLOCKLIST + %w(mp4)
+    else
+      EXTENSION_BLOCKLIST
+    end
+
   end
 
   class ZipFile

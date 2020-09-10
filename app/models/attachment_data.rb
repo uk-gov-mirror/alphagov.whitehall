@@ -14,6 +14,7 @@ class AttachmentData < ApplicationRecord
   validate :file_is_not_empty
 
   attr_accessor :to_replace_id
+  attr_accessor :uploaded_by_gds_editor
   belongs_to :replaced_by, class_name: "AttachmentData"
   validate :cant_be_replaced_by_self
   after_save :handle_to_replace_id
