@@ -86,7 +86,7 @@ module PublishingApi
     end
 
     def image_required?
-      item.image_display != "no_image"
+      item.image_display_option != "no_image"
     end
 
     def emphasised_organisation_default_image_available?
