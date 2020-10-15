@@ -1,0 +1,23 @@
+{
+  "name": "whitehall",
+  "description": "Publishing and frontend rendering application for GOV.UK",
+  "private": true,
+  "author": "Government Digital Service",
+  "license": "MIT",
+  "scripts": {
+    "lint": "yarn run lint:js && yarn run lint:scss",
+    "lint:js": "standard app/assets/javascripts/{*.js,**/*.js} spec/javascripts/{*.js,**/*.js}",
+    "lint:scss": "stylelint app/assets/stylesheets/"
+  },
+  "standard": {
+    "ignore": []
+  },
+  "stylelint": {
+    "extends": "stylelint-config-gds/scss"
+  },
+  "devDependencies": {
+    "standard": "^14.3.4",
+    "stylelint": "^13.7.2",
+    "stylelint-config-gds": "^0.1.0"
+  }
+}
