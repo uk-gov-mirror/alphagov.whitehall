@@ -7,7 +7,7 @@
 //= require govuk-admin-template
 //= require jquery.ui.all
 //= require vendor/jquery/jquery.player.min
-//= require vendor/google-diff-match-patch.js
+//= require_tree ./vendor
 //
 //= require shared_mustache
 //= require templates
