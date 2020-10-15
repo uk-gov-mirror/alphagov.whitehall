@@ -25,9 +25,6 @@
       "test/javascripts/support/"
     ]
   },
-  "stylelint": {
-    "extends": "stylelint-config-gds/scss"
-  },
   "devDependencies": {
     "standard": "^14.3.4",
     "stylelint": "^13.7.2",
