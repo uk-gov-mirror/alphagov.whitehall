@@ -263,7 +263,7 @@
     overflow: hidden;
     top: $gutter-two-thirds;
     right: $gutter-two-thirds;
-    @include border-radius($gutter);
+    border-radius: $gutter;
   }
 
   @include ie-lte(7) {

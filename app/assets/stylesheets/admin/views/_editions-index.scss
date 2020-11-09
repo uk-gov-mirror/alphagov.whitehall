@@ -60,7 +60,7 @@
 
 // Edition filter page styling to overide bootstrap
   .well {
-    @include border-radius(0);
+    border-radius: 0;
     border: 0;
     margin-top: 0;
   }
@@ -78,7 +78,7 @@
         }
         &:first-child a,
         &:last-child a {
-          @include border-radius(0);
+          border-radius: 0;
         }
       }
     }

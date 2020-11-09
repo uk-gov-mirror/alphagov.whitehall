@@ -31,7 +31,7 @@
       background: #999;
       color: white;
       border: none;
-      @include border-radius(3px);
+      border-radius: 3px;
       margin: 0;
       padding: 3px;
     }
