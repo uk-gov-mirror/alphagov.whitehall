@@ -67,9 +67,6 @@ form {
     &.date {
       width: auto;
     }
-    @include ie-lte(7){
-      height: 100px;
-    }
   }
 
   .original-translation {

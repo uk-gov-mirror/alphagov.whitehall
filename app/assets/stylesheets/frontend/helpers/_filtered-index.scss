@@ -108,14 +108,6 @@
           }
         }
 
-        @include ie-lte(9) {
-          .single-row-select {
-            background-image: none;
-            padding: 0 0 0 $gutter-one-third;
-            border-radius: 5px 0 0 5px;
-          }
-        }
-
         .button {
           margin-top: $gutter;
           display: block;
@@ -138,9 +130,6 @@
         .disabled {
           opacity: 0.3;
           cursor: default;
-          @include ie-lte(7) {
-            color: $secondary-text-colour;
-          }
         }
       }
     }
@@ -226,14 +215,6 @@
         @include core-19;
         margin: $gutter-half 0;
       }
-    }
-  }
-
-
-  @include ie(6) {
-    .filter-form,
-    .filter-results {
-      zoom: 1;
     }
   }
 }

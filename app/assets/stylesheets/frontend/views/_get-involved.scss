@@ -139,9 +139,6 @@
           @include media(tablet) {
             float: left;
             width: $half;
-            @include ie(7) {
-              width: 49.99%;
-            }
           }
         }
         .document-row {
