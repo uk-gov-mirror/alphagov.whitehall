@@ -68,7 +68,7 @@
       }
     }
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       .visuallyhidden {
         @include core-27;
         display: inline-block;

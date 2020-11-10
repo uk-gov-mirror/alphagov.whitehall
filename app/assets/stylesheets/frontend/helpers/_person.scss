@@ -1,11 +1,11 @@
 .person-excerpt {
   list-style: none;
   clear: left;
-  @include media(tablet) {
+  @include govuk-media-query($from: tablet) {
     clear: none;
   }
 
-  @include media(tablet) {
+  @include govuk-media-query($from: tablet) {
     float: left;
     width: $one-quarter;
 
@@ -25,7 +25,7 @@
     @include right-to-left {
       float: right;
     }
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       width: $full-width;
       float: none;
     }
@@ -35,7 +35,7 @@
       @include right-to-left {
         padding: 0 0 0 $gutter-half;
       }
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding: 0;
       }
       &:after {

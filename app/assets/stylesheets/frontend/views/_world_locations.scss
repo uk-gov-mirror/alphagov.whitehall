@@ -1,12 +1,12 @@
 .world-locations-index {
   .page-title {
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       padding: $gutter*2 0 $gutter;
     }
 
     hgroup {
       @include heading-48;
-      @include media(desktop) {
+      @include govuk-media-query($from: desktop) {
         width: $two-thirds;
       }
 
@@ -28,7 +28,7 @@
       .type-heading {
         margin-bottom: $gutter;
 
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           width: $one-third;
           float: left
         }
@@ -40,7 +40,7 @@
       }
 
       .content {
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           width: $two-thirds;
           float: left;
           padding-top: $gutter - $gutter-one-sixth;
@@ -86,7 +86,7 @@
 
   .headings-block {
     margin-bottom: $gutter;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin-bottom: 0;
     }
     .heading-extra {
@@ -98,7 +98,7 @@
             margin-bottom: $gutter-one-sixth;
           }
         }
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           padding-left: 0;
         }
       }
@@ -108,7 +108,7 @@
     }
   }
 
-  @include media(tablet) {
+  @include govuk-media-query($from: tablet) {
     .heading-block {
       .content {
         .see-all {
@@ -128,7 +128,7 @@
     .inner-block {
       padding: 0;
 
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding: 0 $gutter-half;
       }
     }
@@ -138,7 +138,7 @@
     &.items-0,
     &.items-3 {
       .recently-updated {
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           width: $two-thirds;
           clear: both;
           @include right-to-left {
@@ -177,7 +177,7 @@
       }
 
       .worldwide-organisation-detail, .contact  {
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           float: left;
           display: inline;
           width: $two-thirds;
@@ -213,7 +213,7 @@
           left: -9999px;
         }
 
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           margin-top: 0;
           min-width: auto;
           width: $one-third;
@@ -234,7 +234,7 @@
   }
   .heading-extra {
     margin: 0;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin: $gutter+$gutter-half 0 $gutter 0;
     }
   }

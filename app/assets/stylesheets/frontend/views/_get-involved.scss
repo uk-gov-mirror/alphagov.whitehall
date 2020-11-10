@@ -4,12 +4,12 @@
     @include heading-36;
     border-bottom: $gutter-one-sixth solid $black;
     margin-bottom: $gutter-half;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin-bottom: $gutter;
     }
     &#take-part {
       margin-bottom: 0;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         margin-bottom: $gutter-half;
       }
     }
@@ -38,7 +38,7 @@
     }
 
     .head-section {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         float: left;
         width: $one-third;
       }
@@ -81,14 +81,14 @@
       }
 
       .column {
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           float: left;
           width: $two-thirds;
         }
       }
 
       .consultation-lists {
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           float: left;
           width: $two-thirds;
         }
@@ -101,7 +101,7 @@
             @include heading-27;
             font-weight: bold;
             padding: 0 0 $gutter-one-sixth;
-            @include media(tablet) {
+            @include govuk-media-query($from: tablet) {
               padding: 0 0 $gutter-one-sixth;
             }
           }
@@ -131,12 +131,12 @@
               }
             }
           }
-          @include media(tablet) {
+          @include govuk-media-query($from: tablet) {
             margin: $gutter-half $gutter-half $gutter;
           }
         }
         .column {
-          @include media(tablet) {
+          @include govuk-media-query($from: tablet) {
             float: left;
             width: $half;
             @include ie(7) {
@@ -189,7 +189,7 @@
       &.start-a-petition,
       &.more-ways {
         margin-bottom: 0;
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           margin-bottom: $gutter;
         }
       }

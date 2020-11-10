@@ -12,7 +12,7 @@
         padding: $gutter-one-third 0;
       }
     }
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding: 0 $gutter-half 0 $gutter;
     }
   }
@@ -35,11 +35,11 @@
 
     line-height: (45/16);
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       line-height: (45/19);
     }
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       display: none;
     }
 

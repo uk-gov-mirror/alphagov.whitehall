@@ -1,7 +1,7 @@
 .organisations-index {
 
   .other-departments .type-heading {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin-top: 0;
       width: $one-quarter;
     }
@@ -10,7 +10,7 @@
   .omissions {
     padding: $gutter*2 $gutter-half 0;
     clear: both;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding: $gutter*2 $gutter 0;
     }
   }
@@ -24,7 +24,7 @@
     padding: $gutter-half 0;
     @extend %contain-floats;
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       width: 75%;
       padding: $gutter*1.5 0 ($gutter + $gutter-one-third);
     }
@@ -70,7 +70,7 @@
       @include ig-core-16;
     }
     .works-with {
-      @include media(desktop){
+      @include govuk-media-query($from: desktop){
         clear: both;
         min-width: 18em;
       }
@@ -91,12 +91,12 @@
         content: " \25B2";
       }
 
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         clear: none;
         float: right;
         margin-right: 0;
       }
-      @include media(desktop) {
+      @include govuk-media-query($from: desktop) {
         float: left;
         margin-left: $gutter-half;
       }
@@ -109,7 +109,7 @@
       display: block;
       margin-left: 0;
 
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         clear: none;
         display: inline;
         margin-left: $gutter-one-third;
@@ -146,7 +146,7 @@
     h1 {
       width: $full-width;
     }
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       float: left;
       width: $one-third;
     }
@@ -159,7 +159,7 @@
       }
     }
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       p {
         clear: both;
         .count {
@@ -194,7 +194,7 @@
     overflow: hidden;
     padding-bottom: $gutter-half;
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding-bottom: $gutter*2;
     }
 
@@ -207,14 +207,14 @@
   .block-7 {
     margin-bottom: 0;
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding-bottom: $gutter;
 
       .see-all {
         padding: $gutter-half;
       }
 
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         margin-bottom: $gutter;
       }
     }
@@ -222,12 +222,12 @@
 
   .headings-block {
     padding: $gutter-one-third 0 0;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding-bottom: $gutter-one-sixth;
     }
 
     .logo {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         float: left;
         width: $two-thirds;
       }
@@ -243,14 +243,14 @@
 
     .heading-extra {
       margin-bottom: 0;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         margin-bottom: $gutter;
       }
       .see-all {
         @include bold-16;
         margin-top: $gutter-one-sixth;
 
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           margin-left: $gutter-two-thirds;
         }
       }
@@ -308,7 +308,7 @@
 
     .document-block {
       margin-bottom: $gutter;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         margin-bottom: $gutter-one-third;
       }
       &:last-child {
@@ -316,7 +316,7 @@
       }
     }
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin-bottom: $gutter*2;
     }
   }
@@ -324,7 +324,7 @@
   #topics {
     border-bottom: 1px solid $border-colour;
     margin-bottom: $gutter-half;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin-bottom: 0;
       padding-bottom: $gutter-two-thirds;
     }
@@ -340,7 +340,7 @@
     @include ig-core-27;
     font-weight: bold;
     margin: 0 0 $gutter-one-third;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin-top: $gutter;
     }
   }
@@ -363,7 +363,7 @@
     .inner-block {
       padding: 0;
 
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding: 0 $gutter-half;
       }
     }
@@ -371,7 +371,7 @@
 
   .has-social {
     .organisation-news.items-0 .recently-updated {
-      @include media(desktop) {
+      @include govuk-media-query($from: desktop) {
         width: $two-thirds;
       }
     }
@@ -382,7 +382,7 @@
 
   .what-we-do {
     .overview {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         display: inline;
         float: left;
         width: $two-thirds;
@@ -398,14 +398,14 @@
   }
 
   .social-media {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       float: left;
       display: inline;
       width: $one-third;
     }
     .content {
       padding: 0 $gutter-half;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding: 0 $gutter-half $gutter-half;
       }
     }
@@ -422,7 +422,7 @@
     }
     .content {
       padding: $gutter-half $gutter-half 0;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding-top: $gutter*1.5;
       }
     }
@@ -451,7 +451,7 @@
       padding: $gutter-one-third;
       margin: $gutter 0;
 
-      @include media(desktop) {
+      @include govuk-media-query($from: desktop) {
         padding: $gutter-half;
       }
 
@@ -467,7 +467,7 @@
           background: transparent image-url("uk-aid-logo.png") no-repeat 0 0;
           background-size: $full-width $full-width;
 
-          @include media(tablet){
+          @include govuk-media-query($from: tablet){
             width: 108px;
             height: 115px;
           }
@@ -499,7 +499,7 @@
     #traffic_commissioners,
     #special_representatives {
       padding-top: $gutter-half;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding-top: $gutter + $gutter-one-third;
       }
     }
@@ -517,7 +517,7 @@
     }
 
     #management.important-board-members-1 {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         // some minus margin juggling here to align the columns
         margin: 0 ($gutter-half*-1);
 
@@ -563,14 +563,14 @@
     display: inline;
     width: $full-width;
     nav {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding: 0 $gutter-half;
       }
     }
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       width: $two-thirds;
     }
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin-bottom: $gutter;
     }
 
@@ -581,7 +581,7 @@
       border-top-style: solid;
       padding-top: $gutter-two-thirds;
 
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         margin: 0 $gutter-half $gutter-one-third;
       }
     }
@@ -599,21 +599,21 @@
   .corporate-information {
     width: $full-width;
     h2, nav, p {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding: 0 $gutter-half;
       }
     }
     nav {
       margin-bottom: $gutter;
     }
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       width: $one-third;
     }
   }
 
   .org-contacts {
     margin-bottom: $gutter;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       position: relative;
       overflow: hidden;
       padding: 0 $gutter-half;
@@ -623,7 +623,7 @@
       clear: both;
       margin-top: $gutter-one-third;
       @extend %contain-floats;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         margin-bottom: $gutter-two-thirds;
       }
       h2 {
@@ -646,7 +646,7 @@
       }
       .adr {
         margin: 0 0 $gutter-one-third;
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           float: left;
           width: 40%;
         }
@@ -671,7 +671,7 @@
       }
       &.postal-address {
         .email-url-number {
-          @include media(tablet){
+          @include govuk-media-query($from: tablet){
             float: left;
             width: 60%;
           }
@@ -696,7 +696,7 @@
     // dupe from static
     ol.steps {
       margin-bottom: $gutter;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding: 0 $gutter-half;
       }
       padding-left: 0;
@@ -750,7 +750,7 @@
 
   .organisation-news {
     @extend %contain-floats;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding-bottom: $gutter+$gutter-half;
     }
   }
@@ -782,7 +782,7 @@
   }
 }
 .organisations-external {
-  @include media(desktop) {
+  @include govuk-media-query($from: desktop) {
     .block-2 {
       width: $two-thirds;
     }
@@ -805,19 +805,19 @@
   .page-header {
     @extend %contain-floats;
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding: $gutter-half 0 $gutter 0;
     }
 
     h1 {
-      @include media(desktop) {
+      @include govuk-media-query($from: desktop) {
         float: left;
         padding-top: 0;
         width: $two-thirds;
       }
     }
 
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       padding-bottom: $gutter*2;
     }
   }
@@ -829,7 +829,7 @@
 
     margin-bottom: $gutter;
 
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       margin-bottom: $gutter*2;
     }
   }
@@ -843,7 +843,7 @@
     }
   }
   .status-block {
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       margin: 0 0 $gutter*2 0;
     }
   }
@@ -889,7 +889,7 @@
     h1 {
       padding: 0;
 
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         float: left;
         width: $two-thirds;
       }
@@ -937,7 +937,7 @@
     #featured-policies,
     #what-we-do,
     #who-we-are {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         width: $two-thirds;
         float: left;
       }
@@ -957,14 +957,14 @@
     }
 
     .social-media {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         width: $one-third;
       }
     }
 
     .features {
       .features-1 {
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           width: $one-third;
           .large {
             width: $two-thirds;
@@ -972,7 +972,7 @@
         }
       }
       .features-2 {
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           width: $two-thirds;
 
           .promotional_feature_item {
@@ -984,7 +984,7 @@
         }
       }
       .features-3 {
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           width: $full-width;
 
           .promotional_feature_item {
@@ -1031,7 +1031,7 @@
 
   .contact-wrapper {
     padding: 0 $gutter-half;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       width: $two-thirds;
       float: left;
       padding: 0;
@@ -1041,19 +1041,19 @@
       @include core-24;
       font-weight: bold;
       padding: $gutter-two-thirds 0;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         margin: 0 $gutter-half;
       }
     }
     .org-contacts {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         margin: 0 $gutter-half;
       }
     }
     .contact {
       clear: both;
       margin-top: $gutter-one-third;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         margin-bottom: $gutter-two-thirds;
       }
       h2 {
@@ -1096,7 +1096,7 @@
   }
 
   .corporate-information {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       width: $one-third;
       float: left;
     }
@@ -1118,7 +1118,7 @@
   @include organisation-brand-colour('.block-2 a', color, $websafe: true);
   @include organisation-brand-colour('.body .attachment .accessibility-warning h3 .toggler', color, $websafe: true);
 
-  @include media(tablet) {
+  @include govuk-media-query($from: tablet) {
     .block-1 {
       width: $one-third;
       float: left;
@@ -1161,7 +1161,7 @@
   }
   .homepage-link {
     margin-top: $gutter-two-thirds;
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       margin-top: $gutter;
     }
   }
@@ -1170,7 +1170,7 @@
     @include ig-core-48;
     font-weight: bold;
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding: $gutter*3 0 $gutter-half;
     }
   }
@@ -1219,7 +1219,7 @@
 
 .organisations-about {
   .corporate-information-block {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       float: left;
       width: $half;
     }
@@ -1237,13 +1237,13 @@
 
 .wales-office {
   .homepage-link {
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       float: left;
       width: $half;
     }
   }
   .organisation-top-tasks {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       float: right;
       width: $half;
       padding-top: 0;

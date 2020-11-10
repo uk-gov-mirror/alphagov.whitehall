@@ -8,7 +8,7 @@
       @extend %contain-floats;
 
       .heading {
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           float: left;
           width: $one-quarter;
         }
@@ -34,14 +34,14 @@
           @include heading-24;
           margin: 0;
           padding-bottom: 0;
-          @include media(tablet) {
+          @include govuk-media-query($from: tablet) {
             margin-top: $gutter-two-thirds;
           }
         }
       }
       .minister-list {
         margin-top: 0;
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           margin-top: $gutter-half;
         }
       }
@@ -51,7 +51,7 @@
     }
     .person-excerpt .inner {
       padding: $gutter-one-third $gutter-half ;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding: $gutter-half;
       }
     }

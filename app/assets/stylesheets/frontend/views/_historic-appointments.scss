@@ -12,7 +12,7 @@
 }
 .historic-appointments {
   .historic-people-list {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       float: left;
       width: $one-quarter;
     }
@@ -30,13 +30,13 @@
 }
 .historic-appointments-index {
   .featured-profiles {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       width: 75%;
       float: left;
     }
 
     .year-block {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         width: $one-third;
         float: left;
       }
@@ -51,7 +51,7 @@
       .person-excerpt {
         width: $full-width;
         float: none;
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           min-height: 280px;
         }
 
@@ -76,11 +76,11 @@
 
 .historical-past-chancellors {
   .featured-profiles {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       width: $full-width;
     }
     .year-block {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         width: $one-quarter;
       }
 

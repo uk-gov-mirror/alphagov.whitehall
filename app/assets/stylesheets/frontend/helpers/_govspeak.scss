@@ -12,7 +12,7 @@
     @include ig-core-27;
     font-weight: bold;
     margin-top: $gutter-half;
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       margin-top: $gutter*1.5;
     }
   }
@@ -30,7 +30,7 @@
   p {
     @include ig-core-19;
     margin: $gutter-one-sixth 0;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin: $gutter-one-third 0;
     }
   }
@@ -73,7 +73,7 @@
     list-style-position: outside;
     @include ig-core-19;
     margin: $gutter-one-sixth 0 $gutter-one-sixth $gutter-two-thirds;
-    @include media (tablet) {
+    @include govuk-media-query($from: tablet) {
       margin: $gutter-one-third 0 $gutter-one-third $gutter-two-thirds;
     }
     ul, ol {
@@ -87,7 +87,7 @@
     }
     @include right-to-left {
       margin: $gutter-one-sixth $gutter-two-thirds $gutter-one-sixth 0;
-      @include media (tablet) {
+      @include govuk-media-query($from: tablet) {
         margin: $gutter-one-third $gutter-two-thirds $gutter-one-third 0;
       }
       ul, ol {
@@ -109,7 +109,7 @@
     list-style-position: outside;
     @include ig-core-19;
     margin: $gutter-one-sixth 0 $gutter-one-sixth $gutter-two-thirds;
-    @include media (tablet) {
+    @include govuk-media-query($from: tablet) {
       margin: $gutter-one-third 0 $gutter-one-third $gutter-two-thirds;
     }
     ul, ol {
@@ -123,7 +123,7 @@
     }
     @include right-to-left {
       margin: $gutter-one-sixth $gutter-two-thirds $gutter-one-sixth 0;
-      @include media (tablet) {
+      @include govuk-media-query($from: tablet) {
         margin: $gutter-one-third $gutter-two-thirds $gutter-one-third 0;
       }
       ul, ol {
@@ -168,7 +168,7 @@
         padding-right: $gutter-half;
       }
 
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding-left: $gutter;
         @include right-to-left {
           padding-left: 0;
@@ -195,7 +195,7 @@
       }
     }
 
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       margin: 0 0 0 (-$gutter);
       @include right-to-left {
         margin: 0 (-$gutter) 0 0;
@@ -245,7 +245,7 @@
       padding: 0;
     }
     ol {
-      @include media(desktop) {
+      @include govuk-media-query($from: desktop) {
         list-style-position: outside;
       }
     }

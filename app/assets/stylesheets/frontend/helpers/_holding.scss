@@ -1,5 +1,5 @@
 .holding-block {
-  @include media(desktop) {
+  @include govuk-media-query($from: desktop) {
     width: $two-thirds;
     margin: $gutter 0;
   }

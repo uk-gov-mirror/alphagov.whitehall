@@ -8,7 +8,7 @@
 
         .image-holder {
           width: $full-width;
-          @include media(tablet) {
+          @include govuk-media-query($from: tablet) {
             width: $two-thirds;
             float: left;
           }
@@ -27,7 +27,7 @@
             padding: 0 $gutter-half;
           }
 
-          @include media(tablet) {
+          @include govuk-media-query($from: tablet) {
             width: $one-third;
             float: left;
 
@@ -59,7 +59,7 @@
   &.items-1,
   &.items-4 {
     .recently-updated {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         clear: both;
         width: $two-thirds;
       }
@@ -70,7 +70,7 @@
     @extend %contain-floats;
   }
 
-  @include media(tablet) {
+  @include govuk-media-query($from: tablet) {
     &.with-featured-links {
       &.items-1,
       &.items-4 {

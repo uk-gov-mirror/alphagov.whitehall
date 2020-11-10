@@ -9,7 +9,7 @@
   .heading {
     padding: $gutter-half 0;
 
-    @include media(tablet){
+    @include govuk-media-query($from: tablet){
       padding: $gutter*1.5 0;
     }
 
@@ -28,7 +28,7 @@
   .heading-with-extra {
     @extend .heading;
 
-    @include media(tablet){
+    @include govuk-media-query($from: tablet){
       float: left;
       width: $two-thirds;
       @include right-to-left {
@@ -51,7 +51,7 @@
 
   .heading-extra {
     margin: $gutter 0;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       float: right;
       width: $one-third;
       margin-top: 0;
@@ -63,14 +63,14 @@
     h4 {
       @include ig-core-19;
 
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         position: absolute;
         left: -9999em;
       }
     }
 
     .all-services {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding: 0 $gutter-two-thirds;
       }
     }
@@ -83,7 +83,7 @@
           padding-right: $gutter-one-third;
         }
       }
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         margin: 0 0 $gutter-half $gutter-two-thirds;
       }
     }

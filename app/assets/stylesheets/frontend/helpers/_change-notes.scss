@@ -85,10 +85,10 @@
       left: -9999em!important;
       position: absolute;
     }
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       width: 30em;
     }
-    @include media(desktop){
+    @include govuk-media-query($from: desktop){
       left: -$gutter*3;
     }
   }

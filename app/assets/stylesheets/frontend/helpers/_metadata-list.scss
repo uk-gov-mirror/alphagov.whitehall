@@ -3,7 +3,7 @@
   display: block;
   margin-bottom: $gutter;
 
-  @include media(tablet){
+  @include govuk-media-query($from: tablet){
     float: left;
     width: $two-thirds;
     @include right-to-left {
@@ -24,7 +24,7 @@
       float: left;
       clear: left;
       width: 8em;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         width: auto;
         min-width: ($gutter * 5);
         padding-right: $gutter-one-third;
@@ -42,7 +42,7 @@
     dd {
       float: left;
       width: 60%;
-      @include media(desktop){
+      @include govuk-media-query($from: desktop){
         width: 70%;
       }
       &.document-worldwide-organisations {
@@ -57,7 +57,7 @@
     }
 
     .change-notes-title {
-      @include media(desktop){
+      @include govuk-media-query($from: desktop){
         clear: left;
         @include right-to-left {
           clear: right;

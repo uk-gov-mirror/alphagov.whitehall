@@ -4,7 +4,7 @@
     @extend %contain-floats;
     padding: 0;
 
-    @include media(tablet){
+    @include govuk-media-query($from: tablet){
       padding: 0 $gutter-half 0;
     }
   }
@@ -21,7 +21,7 @@
     .document-block {
       width: $full-width;
 
-      @include media(tablet){
+      @include govuk-media-query($from: tablet){
         h1 {
           width: $one-third;
           float: left;
@@ -48,7 +48,7 @@
       clear: both;
     }
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       width: $half;
       float: left;
       @include right-to-left {

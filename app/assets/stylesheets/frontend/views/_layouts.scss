@@ -4,7 +4,7 @@
 .inner-block {
   padding: 0 $gutter-half;
 
-  @include media(tablet) {
+  @include govuk-media-query($from: tablet) {
     padding: 0 $gutter;
   }
 
@@ -13,7 +13,7 @@
 
     padding: 0;
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding: 0 $gutter-half;
     }
   }

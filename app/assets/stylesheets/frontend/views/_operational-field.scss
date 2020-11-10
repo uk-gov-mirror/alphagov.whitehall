@@ -1,5 +1,5 @@
 .operational-field-show {
-  @include media(desktop) {
+  @include govuk-media-query($from: desktop) {
     .block-2, .block-3 {
       float: left;
       display: inline;
@@ -15,7 +15,7 @@
   }
 
   .meta {
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       margin-top: $gutter;
       float: left;
       display: block;

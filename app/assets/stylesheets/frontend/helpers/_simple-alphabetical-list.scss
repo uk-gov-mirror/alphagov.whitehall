@@ -8,7 +8,7 @@
     overflow: hidden;
     width: auto;
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding-left: $one-third;
       width: $two-thirds;
     }
@@ -20,7 +20,7 @@
     h2 {
       @include core-80;
       font-weight: bold;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         text-indent: -4px;
       }
     }

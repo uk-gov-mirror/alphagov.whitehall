@@ -8,7 +8,7 @@
       border-bottom-width: 5px;
       border-bottom-style: solid;
       margin-bottom: $gutter-half;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         margin: 0 $gutter-half $gutter;
       }
     }
@@ -17,7 +17,7 @@
     }
     .person-excerpt .inner {
       padding: 0 0 $gutter-half 0;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding: 0 $gutter-half $gutter-half;
       }
     }

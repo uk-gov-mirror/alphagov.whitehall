@@ -34,7 +34,7 @@
       }
     }
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin-bottom: $gutter*2;
     }
   }
@@ -49,7 +49,7 @@
           @include core-19;
           display: block;
         }
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           padding-top: 0;
         }
       }
@@ -61,7 +61,7 @@
 
 .historic-people-show {
   .person-info {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       float: left;
       width: $one-quarter;
     }
@@ -110,7 +110,7 @@
       }
     }
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       position: relative;
       width: 75%;
       .person-profile {

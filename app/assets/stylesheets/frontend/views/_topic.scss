@@ -2,7 +2,7 @@
 
 .topics-show {
   @include topic-features;
-  @include media(desktop) {
+  @include govuk-media-query($from: desktop) {
     .block-2 {
       width: $two-thirds;
       float: left;
@@ -21,7 +21,7 @@
   .block {
     margin-bottom: $gutter;
     &.block-4 {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         .see-all {
           padding: $gutter-half;
         }
@@ -29,7 +29,7 @@
     }
   }
 
-  @include media(desktop) {
+  @include govuk-media-query($from: desktop) {
     .latest-block {
       .inner-block {
         padding-left: 0;
@@ -82,7 +82,7 @@
 
   .heading-extra {
     margin: 0 $gutter-half $gutter;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin: $gutter+$gutter-half 0 $gutter;
     }
   }

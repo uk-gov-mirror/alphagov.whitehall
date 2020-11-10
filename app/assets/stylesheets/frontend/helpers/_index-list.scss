@@ -21,17 +21,17 @@
         position: relative;
         padding: $gutter-one-sixth;
         top: -$gutter-one-sixth;
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           top: -$gutter-one-third;
         }
       }
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         @include core-48;
         font-weight: bold;
       }
     }
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding: $gutter*1.5 0 ($gutter + $gutter-one-third);
       width: 80%;
     }

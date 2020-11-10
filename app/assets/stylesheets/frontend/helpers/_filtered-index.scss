@@ -1,6 +1,6 @@
 .filtered-index {
   .filter-form-block {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       float: left;
       width: $one-third;
 
@@ -30,7 +30,7 @@
         .filter {
           width: $full-width;
           margin-top: $gutter-one-third;
-          @include media (tablet) {
+          @include govuk-media-query($from: tablet) {
             margin-top: $gutter-half;
           }
         }
@@ -50,7 +50,7 @@
           border: 1px solid $grey-3;
           width: $full-width;
           margin: 0;
-          @include media (desktop) {
+          @include govuk-media-query($from: desktop) {
             padding: $gutter-one-sixth 0;
             text-indent: $gutter-one-third;
           }
@@ -77,7 +77,7 @@
             width: auto;
             top: $gutter-one-sixth;
             left: 0;
-            @include media (tablet) {
+            @include govuk-media-query($from: tablet) {
               top: $gutter * 0.25;
             }
           }
@@ -93,7 +93,7 @@
           }
         }
 
-        @include media (tablet) {
+        @include govuk-media-query($from: tablet) {
           .single-row-select {
             border: 1px solid $border-colour;
             padding: $gutter-one-sixth $gutter-two-thirds $gutter-one-sixth $gutter-one-third;
@@ -126,7 +126,7 @@
           padding-bottom: 7px;
           margin: $gutter-half 0;
 
-          @include media (desktop) {
+          @include govuk-media-query($from: desktop) {
             padding-bottom: 0;
           }
 
@@ -148,7 +148,7 @@
 
 
   .filter-results-block {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       float: left;
       width: $two-thirds;
 
@@ -201,7 +201,7 @@
         }
       }
 
-      @include media (tablet) {
+      @include govuk-media-query($from: tablet) {
         padding-top: $gutter-one-sixth;
         .count {
           // The count is shifted up instead of the rest of the text down because

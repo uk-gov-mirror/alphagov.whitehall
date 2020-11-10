@@ -5,7 +5,7 @@
   .history,
   .links {
     padding-bottom: $gutter;
-    @include media(tablet){
+    @include govuk-media-query($from: tablet){
       float: left;
       @include right-to-left {
         float: right;
@@ -13,16 +13,16 @@
     }
   }
   .history {
-    @include media(tablet){
+    @include govuk-media-query($from: tablet){
       width: $one-third;
     }
   }
   .links {
-    @include media(tablet){
+    @include govuk-media-query($from: tablet){
       width: $two-thirds;
     }
     dl {
-      @include media(tablet){
+      @include govuk-media-query($from: tablet){
         padding-left: $gutter-half;
         @include right-to-left {
           padding-left: 0;

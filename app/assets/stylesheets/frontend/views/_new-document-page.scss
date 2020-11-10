@@ -1,5 +1,5 @@
 .document-page {
-  @include media(desktop) {
+  @include govuk-media-query($from: desktop) {
     .block-3 {
       float: left;
       width: $one-third;
@@ -22,7 +22,7 @@
 
   .summary {
     padding-bottom: $gutter-two-thirds;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding-bottom: $gutter + $gutter-half;
     }
 

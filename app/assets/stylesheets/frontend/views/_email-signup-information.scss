@@ -5,7 +5,7 @@
     font-weight: bold;
     margin-top: $gutter;
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin: $gutter*2 0 $gutter-half;
     }
   }
@@ -15,7 +15,7 @@
     font-weight: bold;
     margin-top: $gutter-half;
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin-top: $gutter;
     }
   }
@@ -28,7 +28,7 @@
   .choices {
     padding: $gutter-one-third 0 $gutter-half;
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       max-width: $two-thirds;
       padding: $gutter-one-third 0 $gutter;
     }

@@ -1,7 +1,7 @@
 .featured-links {
   list-style: none;
 
-  @include media(tablet) {
+  @include govuk-media-query($from: tablet) {
     padding-left: $gutter-two-thirds;
   }
 
@@ -9,7 +9,7 @@
     @include core-16;
     font-weight: bold;
     padding: 2px 0;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding-bottom: $gutter-one-sixth;
     }
   }

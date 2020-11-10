@@ -20,7 +20,7 @@
       background: $panel-colour;
       color: $text-colour;
 
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         margin-bottom: 4px;
       }
 

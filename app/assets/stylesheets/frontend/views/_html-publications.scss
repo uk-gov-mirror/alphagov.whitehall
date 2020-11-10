@@ -2,7 +2,7 @@
   @extend %contain-floats;
 
   padding: $gutter-half $gutter-half $gutter*3;
-  @include media(tablet) {
+  @include govuk-media-query($from: tablet) {
     padding: $gutter $gutter $gutter*3;
   }
 
@@ -12,7 +12,7 @@
     position: relative;
 
     .organisations {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         width: $one-quarter;
         float: left;
       }
@@ -22,7 +22,7 @@
     }
     .return {
       color: $text-colour;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         width: 75%;
         float: left;
 
@@ -41,7 +41,7 @@
     background: $govuk-blue;
     padding: $gutter-one-third $gutter-half;
     margin: 0 (-$gutter-half);
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       padding: 0 $gutter;
       margin: 0;
     }
@@ -54,7 +54,7 @@
         margin: $gutter-one-sixth 0 $gutter-half;
         color: $white;
 
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           margin-bottom: $gutter*2;
         }
       }
@@ -62,7 +62,7 @@
         @include core-27;
         display: block;
         margin: $gutter-two-thirds 0 0;
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           margin: $gutter*2.5 0 $gutter-one-third;
         }
       }
@@ -81,7 +81,7 @@
     color: $white;
     margin: 0 0 $gutter+$gutter-one-third;
     width: 100%;
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       width: 70%;
     }
 
@@ -105,14 +105,14 @@
           list-style: none;
           &.numbered {
             margin-left: $gutter-two-thirds;
-            @include media(desktop) {
+            @include govuk-media-query($from: desktop) {
               margin-left: $gutter;
             }
             a {
               .heading-number {
                 @include bold-19($tabular-numbers: true);
                 margin-left: -18px;
-                @include media(desktop) {
+                @include govuk-media-query($from: desktop) {
                   margin-left: -20px;
                 }
               }
@@ -138,7 +138,7 @@
     z-index: 2;
 
     .govspeak {
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         width: 75%;
         float: right;
         @include right-to-left{
@@ -151,14 +151,14 @@
         @include core-36;
         margin: $gutter-half 0 $gutter-one-third;
 
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           margin: $gutter*2 0 $gutter-half;
         }
         .number {
           background: $white;
           padding-right: $gutter-one-third;
           font-weight: bold;
-          @include media(tablet){
+          @include govuk-media-query($from: tablet){
             @include core-80;
             font-weight: bold;
             position: absolute;
@@ -183,7 +183,7 @@
           background: $white;
           color: $secondary-text-colour;
           padding-right: $gutter-one-third;
-          @include media(tablet) {
+          @include govuk-media-query($from: tablet) {
             padding-right: 0;
             display: inline-block;
             width: $gutter*2.5;
@@ -195,7 +195,7 @@
         font-weight: bold;
         color: black;
         margin-top: $gutter;
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           margin-top: ($gutter*2) + $gutter-two-thirds;
         }
       }
@@ -210,7 +210,7 @@
       p, ul, ol {
         line-height: 1.4736842105;
         margin: $gutter-one-third 0;
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           margin: $gutter-two-thirds 0;
         }
         a {
@@ -224,7 +224,7 @@
         @include core-16;
         font-weight: bold;
         margin: 0 0 $gutter-one-third;
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           margin: 0 0 $gutter-two-thirds;
         }
       }
@@ -398,7 +398,7 @@
           margin-top: 0px;
           .number {
             background: none;
-            @include media(tablet) {
+            @include govuk-media-query($from: tablet) {
               width: $gutter-one-third*9;
               margin-left: $gutter-one-third*-9;
             }
@@ -421,7 +421,7 @@
       .stat-headline {
         margin-bottom: $gutter-half;
 
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           margin-bottom: $gutter;
         }
 
@@ -440,7 +440,7 @@
       & > .stat-headline:first-child {
         margin-top: $gutter;
 
-        @include media(tablet) {
+        @include govuk-media-query($from: tablet) {
           margin-top: ($gutter * 2) + $gutter-two-thirds;
         }
       }

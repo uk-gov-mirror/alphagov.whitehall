@@ -2,7 +2,7 @@
   clear: both;
   padding-top: $gutter-half;
 
-  @include media(tablet) {
+  @include govuk-media-query($from: tablet) {
     clear: none;
     float: left;
     width: $one-third;

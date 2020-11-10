@@ -5,7 +5,7 @@
     @include ig-core-19;
     list-style: none;
     margin-bottom: $gutter-one-third;
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin-bottom: 0;
     }
 
@@ -18,7 +18,7 @@
     .collection-item {
       @extend %contain-floats;
 
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         clear: both;
         margin-top: $gutter-two-thirds;
         padding-top: $gutter-one-third;
@@ -49,7 +49,7 @@
   }
 
   &.two-columns {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin: 0 ($gutter-half*-1);
 
       .collection-item {
@@ -85,7 +85,7 @@
   }
 
   &.three-columns {
-    @include media(tablet){
+    @include govuk-media-query($from: tablet){
       margin: 0 ($gutter-half*-1);
 
       .collection-item {

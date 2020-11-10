@@ -7,7 +7,7 @@
   background: transparent;
   color: $text-colour;
 
-  @include media(desktop) {
+  @include govuk-media-query($from: desktop) {
     padding-bottom: $gutter*2;
   }
 

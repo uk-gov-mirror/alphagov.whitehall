@@ -46,7 +46,7 @@ $thumbnail-width: 99px;
 
     h2 {
       padding-top: 0;
-      @include media(tablet) {
+      @include govuk-media-query($from: tablet) {
         padding-top: 7px;
       }
     }

@@ -3,7 +3,7 @@
 
   margin-bottom: $gutter;
 
-  @include media(desktop) {
+  @include govuk-media-query($from: desktop) {
     margin-left: $one-third;
     padding-left: $gutter-half;
   }

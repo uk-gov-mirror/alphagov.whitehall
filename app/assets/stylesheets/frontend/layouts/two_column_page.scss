@@ -5,7 +5,7 @@
     padding-bottom: $gutter;
   }
 
-  @include media(desktop) {
+  @include govuk-media-query($from: desktop) {
     .block-2 {
       width: $one-quarter;
       float: left;

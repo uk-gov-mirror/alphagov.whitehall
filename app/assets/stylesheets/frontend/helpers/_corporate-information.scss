@@ -8,7 +8,7 @@
     padding-top: $gutter-one-third;
     @include core-14;
     
-    @include media(tablet){
+    @include govuk-media-query($from: tablet){
       max-width: 36em;
     }
   }

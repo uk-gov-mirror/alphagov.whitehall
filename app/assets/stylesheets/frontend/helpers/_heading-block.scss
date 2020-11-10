@@ -19,7 +19,7 @@
   }
 
   .head-section { 
-    @include media(tablet){
+    @include govuk-media-query($from: tablet){
       h1 {
         padding: 0 $gutter-half;        
       }
@@ -33,7 +33,7 @@
   }
 
   .content {
-    @include media(tablet){
+    @include govuk-media-query($from: tablet){
       float: right;
       width: $two-thirds;
       @include right-to-left {
@@ -42,7 +42,7 @@
     }
 
     article {
-      @include media(tablet){
+      @include govuk-media-query($from: tablet){
         padding-left: $gutter-half;
 
         @include right-to-left {
@@ -53,7 +53,7 @@
     }
 
     .document-list {
-      @include media(tablet){
+      @include govuk-media-query($from: tablet){
         padding: 0 $gutter-half;
         margin-top: -$gutter-one-third;
       }
@@ -64,7 +64,7 @@
       font-weight: bold;
       padding-top: $gutter-one-third;
 
-      @include media(desktop) {
+      @include govuk-media-query($from: desktop) {
         padding-left: $gutter-half;
 
         @include right-to-left {

@@ -1,11 +1,11 @@
 .lead-image-sidebar {
   .image {
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       float: right;
       margin: $gutter-one-third 0 $gutter $gutter;
       width: $one-third;
     }
-    @include media(desktop) {
+    @include govuk-media-query($from: desktop) {
       float: none;
       margin: 0;
       width: auto;

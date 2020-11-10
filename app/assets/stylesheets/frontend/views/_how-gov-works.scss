@@ -20,7 +20,7 @@
       padding: 0;
     }
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       margin-left: -$gutter-half;
       margin-right: -$gutter-half;
 
@@ -171,7 +171,7 @@
       }
     }
 
-    @include media(tablet) {
+    @include govuk-media-query($from: tablet) {
       .feature-ministers__symbol {
         margin: 0 1em;
         position: relative;
@@ -284,7 +284,7 @@
     }
   }
 
-  @include media(tablet) {
+  @include govuk-media-query($from: tablet) {
     .legislation,
     .access-information {
       .one-third {
