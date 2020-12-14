@@ -12,9 +12,9 @@ task :brexit_load_test, [:date] => :environment do |_, args|
   end
 
   puts "Creating 3000 editions + relations"
-  editions = document_ids.map do |document_id|
+  editions = document_ids.map.with_index do |document_id, index|
     NewsArticle.create!(
-      title: "Callum and Peter's load test", summary: "Load test", body: "Load test", creator: creator,
+      title: "Callum and Peter's load test - #{index}", summary: "Load test", body: "Load test", creator: creator,
       previously_published: false, news_article_type_id: 1, lead_organisations: [creator.organisation],
       scheduled_publication: date, document_id: document_id
     )
