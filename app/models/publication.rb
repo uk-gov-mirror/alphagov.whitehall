@@ -133,7 +133,7 @@ class Publication < Publicationesque
   end
 
   def translatable?
-    !non_english?
+    english?
   end
 
   def has_attachments?
