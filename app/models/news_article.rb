@@ -71,7 +71,7 @@ class NewsArticle < Announcement
   end
 
   def non_english_primary_locale_only_for_world_news_story
-    if non_english_edition? && !world_news_story?
+    if non_english? && !world_news_story?
       errors.add(:foreign_language, "is not allowed")
     end
   end
@@ -89,7 +89,7 @@ class NewsArticle < Announcement
   end
 
   def translatable?
-    !non_english_edition?
+    !non_english?
   end
 
 private
