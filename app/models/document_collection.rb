@@ -57,7 +57,7 @@ class DocumentCollection < Edition
 private
 
   def string_for_slug
-    title
+    title if Locale.new(primary_locale).latin_script?
   end
 
   def create_default_group
