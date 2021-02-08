@@ -32,28 +32,6 @@ module Whitehall::DocumentFilter
       filter = build_filter(keywords: " alpha   beta ")
       assert_equal %w[alpha beta], filter.keywords
     end
-
-    test "publication_filter_option param sets the filter option with a slug" do
-      filter_option = Whitehall::PublicationFilterOption::ClosedConsultation
-      filter = build_filter(publication_filter_option: filter_option.slug)
-
-      assert_equal filter_option, filter.selected_publication_filter_option
-    end
-
-    test "publication_type param also sets the filter option for backwards compatibility" do
-      filter_option = Whitehall::PublicationFilterOption::PolicyPaper
-      filter = build_filter(publication_type: filter_option.slug)
-
-      assert_equal filter_option, filter.selected_publication_filter_option
-    end
-
-    test "publication_filter_option takes precedence over publication_type param" do
-      filter_option = Whitehall::PublicationFilterOption::Statistics
-      filter = build_filter(publication_type: "foobar", publication_filter_option: filter_option.slug)
-
-      assert_equal filter_option, filter.selected_publication_filter_option
-    end
-
   private
 
     def build_filter(args = {})

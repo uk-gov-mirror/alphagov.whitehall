@@ -4,99 +4,6 @@ module Whitehall::DocumentFilter
   class MysqlTest < ActiveSupport::TestCase
     include DocumentFilterHelpers
 
-    test "#selected_topics returns an empty set by default" do
-      assert_equal [], Whitehall::DocumentFilter::Mysql.new.selected_topics
-    end
-
-    test "#selected_organisations returns an empty set by default" do
-      assert_equal [], Whitehall::DocumentFilter::Mysql.new.selected_organisations
-    end
-
-    test "#selected_publication_filter_option returns nil by default" do
-      assert_nil Whitehall::DocumentFilter::Mysql.new.selected_publication_filter_option
-    end
-
-    test "topics param filters the documents by topic using slugs" do
-      topic = stub_topic("car-tax")
-
-      filtered_scope = stub_document_scope("filtered_scope")
-      document_scope.expects(:published_in_topic).with([topic]).returns(filtered_scope)
-
-      filter = create_filter(document_scope, topics: [topic.slug])
-
-      assert_equal filtered_scope, filter.documents
-    end
-
-    test "topics param sets #selected_topics" do
-      topic = stub_topic("car-tax")
-
-      filtered_scope = stub_document_scope("filtered_scope")
-      document_scope.stubs(:published_in_topic).with([topic]).returns(filtered_scope)
-
-      filter = create_filter(document_scope, topics: [topic.slug])
-
-      assert_equal [topic], filter.selected_topics
-    end
-
-    test "topics param does not filter if topics are not present" do
-      document_scope.expects(:published_in_topic).never
-
-      filter = create_filter(document_scope, topics: "")
-
-      assert_equal document_scope, filter.documents
-    end
-
-    test "topics param does not filter if topic is 'all'" do
-      document_scope.expects(:published_in_topic).never
-
-      filter = create_filter(document_scope, topics: %w[all])
-
-      assert_equal document_scope, filter.documents
-    end
-
-    test "departments param filters the documents by organisation using slugs" do
-      organisation = stub_organisation("defra")
-
-      filtered_scope = stub_document_scope("filtered_scope")
-      document_scope.stubs(:in_organisation).with([organisation]).returns(filtered_scope)
-
-      filter = create_filter(document_scope, departments: [organisation.slug])
-
-      assert_equal filtered_scope, filter.documents
-    end
-
-    test "departments param sets #selected_organisations" do
-      organisation = stub_organisation("defra")
-
-      filter = create_filter(document_scope, departments: [organisation.slug])
-
-      assert_equal [organisation], filter.selected_organisations
-    end
-
-    test "does not filter if departments are not present" do
-      document_scope.expects(:in_organisation).never
-      create_filter(document_scope, departments: "")
-    end
-
-    test "does not filter if departments is 'all'" do
-      document_scope.expects(:in_organisation).never
-      create_filter(document_scope, departments: %w[all])
-    end
-
-    test "keywords param filters by content containing each keyword" do
-      filtered_scope = stub_document_scope("filtered scope")
-      document_scope.expects(:with_title_or_summary_containing).with("alpha", "beta").returns(filtered_scope)
-
-      filter = create_filter(document_scope, keywords: "alpha beta")
-
-      assert_equal filtered_scope, filter.documents
-    end
-
-    test "keywords param does not filter if no keywords were given" do
-      document_scope.expects(:with_title_or_summary_containing).never
-      create_filter(document_scope, keywords: "")
-    end
-
     test "locale param filters content by locale" do
       filtered_scope = stub_document_scope("filtered scope")
       document_scope.expects(:with_translations).with("fr").returns(filtered_scope)
@@ -106,37 +13,6 @@ module Whitehall::DocumentFilter
     test "locale param does not filter if no locale given" do
       document_scope.expects(:with_translations).never
       create_filter(document_scope, {})
-    end
-
-    test "date param allows filtering after a date" do
-      document_scope.expects(:published_after).with(Date.new(2012, 1, 1)).returns(document_scope)
-      create_filter(document_scope, from_date: "2012-01-01 12:23:45")
-    end
-
-    test "date param allows filtering before a date" do
-      document_scope.expects(:published_before).with(Date.new(2012, 1, 1)).returns(document_scope)
-      create_filter(document_scope, to_date: "2012-01-01 12:23:45")
-    end
-
-    test "publication_type param filters by publication type" do
-      publication_filter_option = stub_publication_filter_option("testing filter - statistics", publication_types: [stub("type", id: 123)])
-
-      filtered_scope = stub_document_scope("filtered_scope")
-      document_scope.expects(:where).with(publication_type_id: [123]).returns(filtered_scope)
-
-      filter = create_filter(document_scope, publication_filter_option: publication_filter_option.slug)
-      assert_equal filtered_scope, filter.documents
-    end
-
-    test "publication_type param can also filter by publication edition type" do
-      publication_filter_option = stub_publication_filter_option("testing filter - statistics", publication_types: [stub("type", id: 123), stub("other type", id: 234)], edition_types: %w[EditionType])
-
-      filtered_scope = stub_document_scope("filtered_scope")
-      expected_query = "(`editions`.`publication_type_id` IN (123, 234) OR `editions`.`type` IN ('EditionType'))"
-      document_scope.expects(:where).with(responds_with(:to_sql, expected_query)).returns(filtered_scope)
-
-      filter = create_filter(document_scope, publication_filter_option: publication_filter_option.slug)
-      assert_equal filtered_scope, filter.documents
     end
 
     test "can filter publications by location" do
@@ -165,15 +41,6 @@ module Whitehall::DocumentFilter
       assert_same_elements [item1, item2, item3, item4], filter.documents
     end
 
-    test "can filter consultations" do
-      _publication = create(:published_publication)
-      consultation = create(:published_consultation)
-      filter = Whitehall::DocumentFilter::Mysql.new(publication_filter_option: "consultations")
-      filter.publications_search
-
-      assert_equal [consultation], filter.documents
-    end
-
     test "can filter announcements by location" do
       world_location = create(:world_location)
       other_world_location = create(:world_location)
@@ -186,25 +53,6 @@ module Whitehall::DocumentFilter
       assert_equal 4, create_filter(Announcement.published, world_locations: [world_location.slug, other_world_location.slug]).documents.count
       assert_equal 3, create_filter(Announcement.published, world_locations: [world_location.slug]).documents.count
       assert_equal 1, create_filter(Announcement.published, world_locations: [other_world_location.slug]).documents.count
-    end
-
-    test "can filter announcements by type" do
-      news_article = create(:published_news_article, news_article_type: NewsArticleType::NewsStory)
-      fatality_notice = create(:published_fatality_notice)
-      transcript = create(:published_speech, speech_type: SpeechType::Transcript)
-      statement = create(:published_speech, speech_type: SpeechType::WrittenStatement)
-
-      filter = create_filter(Announcement.published, announcement_filter_option: "news-stories")
-      assert_equal [news_article.id], filter.documents.map(&:id)
-
-      filter = create_filter(Announcement.published, announcement_filter_option: "fatality-notices")
-      assert_equal [fatality_notice.id], filter.documents.map(&:id)
-
-      filter = create_filter(Announcement.published, announcement_filter_option: "speeches")
-      assert_equal [transcript.id], filter.documents.map(&:id)
-
-      filter = create_filter(Announcement.published, announcement_filter_option: "statements")
-      assert_equal [statement.id], filter.documents.map(&:id)
     end
 
     test "if page param given, returns a page of documents using page size of 20" do

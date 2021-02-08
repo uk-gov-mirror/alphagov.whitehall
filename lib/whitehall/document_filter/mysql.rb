@@ -16,12 +16,6 @@ module Whitehall::DocumentFilter
 
     def apply_filters
       filter_by_locale!
-      filter_by_topics!
-      filter_by_departments!
-      filter_by_keywords!
-      filter_by_date!
-      filter_by_publication_filter_option!
-      filter_by_announcement_filter_option!
       filter_by_location!
       apply_sort_direction!
       paginate!
@@ -31,82 +25,6 @@ module Whitehall::DocumentFilter
 
     def filter_by_locale!
       @documents = @documents.with_translations(locale) if locale
-    end
-
-    def filter_by_topics!
-      if selected_topics.any?
-        @documents = @documents.published_in_topic(selected_topics)
-      end
-    end
-
-    def filter_by_departments!
-      if selected_organisations.any?
-        @documents = @documents.in_organisation(selected_organisations)
-      end
-    end
-
-    def filter_by_keywords!
-      if keywords.any?
-        @documents = @documents.with_title_or_summary_containing(*keywords)
-      end
-    end
-
-    def filter_by_date!
-      if @from_date.present?
-        @documents = @documents.published_after(@from_date)
-      end
-      if @to_date.present?
-        @documents = @documents.published_before(@to_date)
-      end
-    end
-
-    def filter_by_publication_filter_option!
-      if selected_publication_filter_option
-        publication_ids = selected_publication_filter_option.publication_types.map(&:id)
-        if selected_publication_filter_option.edition_types.any?
-          edition_types = selected_publication_filter_option.edition_types
-          editions = @documents.arel_table
-          @documents = @documents.where(
-            editions[:publication_type_id].in(publication_ids).or(
-              editions[:type].in(edition_types),
-            ),
-          )
-        else
-          @documents = @documents.where(publication_type_id: publication_ids)
-        end
-      end
-    end
-
-    def filter_by_announcement_filter_option!
-      if selected_announcement_filter_option
-        @documents = @documents
-                       .where(
-                         @documents
-                           .arel_table[:type]
-                           .in(
-                             selected_announcement_filter_option.edition_types,
-                           ),
-                       )
-        if selected_announcement_filter_option.speech_types.present?
-          @documents = @documents
-                         .where(
-                           @documents
-                             .arel_table[:speech_type_id]
-                             .in(
-                               selected_announcement_filter_option.speech_types.map(&:id),
-                             ),
-                         )
-        elsif selected_announcement_filter_option.news_article_types.present?
-          @documents = @documents
-                         .where(
-                           @documents
-                             .arel_table[:news_article_type_id]
-                             .in(
-                               selected_announcement_filter_option.news_article_types.map(&:id),
-                             ),
-                         )
-        end
-      end
     end
 
     def filter_by_location!

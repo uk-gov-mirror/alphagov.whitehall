@@ -59,11 +59,6 @@ module Whitehall::DocumentFilter
       find_by_slug(Organisation, @departments)
     end
 
-    def selected_publication_filter_option
-      filter_option = @params[:publication_filter_option] || @params[:publication_type]
-      Whitehall::PublicationFilterOption.find_by_slug(filter_option)
-    end
-
     def selected_announcement_filter_option
       # Keeping announcement_type_option to support legacy feeds
       filter_option = @params[:announcement_filter_option] || @params[:announcement_type_option] || @params[:announcement_type]
