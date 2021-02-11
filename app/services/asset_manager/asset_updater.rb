@@ -36,6 +36,7 @@ class AssetManager::AssetUpdater
     raise AssetAttributesEmpty.new(attachment_data.id, legacy_url_path) if new_attributes.empty?
 
     unless attributes.slice(*keys) == new_attributes.slice(*keys)
+      puts "Arrived in Asset Updater, attributes to be updated: #{new_attributes}"
       asset_manager.update_asset(attributes["id"], new_attributes)
     end
   end

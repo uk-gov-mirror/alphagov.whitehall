@@ -5,6 +5,7 @@ class AssetManagerAttachmentRedirectUrlUpdateWorker < WorkerBase
     attachment_data = AttachmentData.find_by(id: attachment_data_id)
     return if attachment_data.blank?
 
+    puts "calling AttachmentUpdater with redirect_url: true"
     AssetManager::AttachmentUpdater.call(attachment_data, redirect_url: true)
   end
 end

@@ -1,9 +1,13 @@
 Whitehall.edition_services.tap do |coordinator|
   coordinator.subscribe do |_event, edition, _options|
+    puts "Arrived in general attachment service listener"
+
     ServiceListeners::AttachmentUpdater.call(attachable: edition)
   end
 
   coordinator.subscribe("unpublish") do |_event, edition, _options|
+    puts "Arrived in unpublish service listener"
+
     # handling edition's dependency on other content
     edition.edition_dependencies.destroy_all
 
@@ -12,6 +16,7 @@ Whitehall.edition_services.tap do |coordinator|
       .new(edition)
       .remove!
 
+    puts "#{edition}"
     # Update attachment redirect urls
     ServiceListeners::AttachmentRedirectUrlUpdater.call(attachable: edition)
   end

@@ -28,6 +28,9 @@ class AssetManager::AttachmentUpdater
         hash.merge!(update.new_attributes)
       end
 
+      puts "Attachment Data: #{attachment_data}"
+      puts "Legacy url path: #{legacy_url_path}"
+      puts "New attributes: #{new_attributes}"
       Update.new(attachment_data, legacy_url_path, new_attributes)
     end
   end
