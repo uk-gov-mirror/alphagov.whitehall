@@ -37,7 +37,7 @@ private
   end
 
   def public_editions(organisation)
-    Edition.includes(:link_check_reports).publicly_visible.with_translations.in_organisation(organisation).order("link_checker_api_reports.updated_at").limit(ORGANISATION_EDITION_LIMIT)
+    Edition.includes(:link_check_report).publicly_visible.with_translations.in_organisation(organisation).order("link_checker_api_reports.updated_at").limit(ORGANISATION_EDITION_LIMIT)
   end
 
   def callback

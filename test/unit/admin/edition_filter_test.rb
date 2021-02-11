@@ -43,7 +43,7 @@ class Admin::EditionFilterTest < ActiveSupport::TestCase
     news_article = create(:news_article)
     create(:link_checker_api_report, link_reportable: news_article)
 
-    editions = Admin::EditionFilter.new(Edition, @current_user, include_link_check_reports: true).editions
+    editions = Admin::EditionFilter.new(Edition, @current_user, include_link_check_report: true).editions
     assert_equal news_article, editions.first
     assert editions.first.association(:link_check_reports).loaded?
   end
