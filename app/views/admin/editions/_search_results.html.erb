@@ -69,10 +69,10 @@
             <% if edition.locked? %>
               <span class="label label-info">Moved to Content Publisher</span>
             <% end %>
-            <% if edition.link_check_reports.any? && edition.link_check_reports.last.completed? %>
-              <% if edition.link_check_reports.last.broken_links.any? %>
+            <% if edition.link_check_report.present? && edition.link_check_report.completed? %>
+              <% if edition.link_check_report.broken_links.any? %>
                 <span class="has-broken-links label label-primary">has broken links</span>
-              <% elsif edition.link_check_reports.last.caution_links.any? %>
+              <% elsif edition.link_check_report.caution_links.any? %>
                 <span class="has-link-warnings label label-info">has link warnings</span>
               <% end %>
             <% end %>

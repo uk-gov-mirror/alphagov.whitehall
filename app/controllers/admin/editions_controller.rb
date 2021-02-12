@@ -110,7 +110,7 @@ class Admin::EditionsController < Admin::BaseController
     if updater.can_perform? && @edition.save_as(current_user)
       updater.perform!
 
-      if @edition.link_check_reports.last
+      if @edition.link_check_report
         LinkCheckerApiService.check_links(@edition, admin_link_checker_api_callback_url)
       end
 
