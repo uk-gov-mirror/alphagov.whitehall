@@ -276,7 +276,7 @@ namespace :publishing_api do
     end
 
     desc "Republish all documents"
-    task :all, [] => :environment do |_, args|
+    task :all, [] => :environment do |_|
       puts "Enqueueing #{Document.count} documents"
       Document.find_each do |document|
         PublishingApiDocumentRepublishingWorker.perform_async_in_queue("bulk_republishing", document.id, true)
