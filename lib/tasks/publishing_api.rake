@@ -275,6 +275,20 @@ namespace :publishing_api do
       puts "Finished enqueueing items for Publishing API"
     end
 
+    desc "Republish documents by content_id"
+    task documents_with_h3_govspeak: :environment do
+      csv = CSV.read(Rails.root.join("lib/tasks/govspeak_with_h3_content_ids.csv"), headers: true)
+      content_ids = csv["content_id"]
+
+      document_ids = Document.where(content_id: content_ids).pluck(:id).uniq
+
+      puts "Bulk republishing #{document_ids.count} Documents"
+
+      # document_ids.each do |id|
+      #   PublishingApiDocumentRepublishingWorker.perform_async_in_queue("bulk_republishing", id, true)
+      # end
+    end
+
     desc "Republish all documents"
     task :all, [] => :environment do |_|
       puts "Enqueueing #{Document.count} documents"
