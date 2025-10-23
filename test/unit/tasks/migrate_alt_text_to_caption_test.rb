@@ -4,6 +4,7 @@ class MigrateAltTextToCaptionTest < ActiveSupport::TestCase
   setup do
     @task = Rake::Task["data_migration:alt_text_to_caption"]
     @task.reenable
+    Thor::Shell::Basic.any_instance.stubs(:yes?).returns(true)
   end
 
   test "migration task processes new images on subsequent runs" do
@@ -156,5 +157,70 @@ class MigrateAltTextToCaptionTest < ActiveSupport::TestCase
     image.reload
     assert_nil image.alt_text, "Alt text should be cleared"
     assert_equal "Alt text content", image.caption
+  end
+
+  test "task includes dry run preview and requires confirmation" do
+    edition = FactoryBot.create(:draft_publication, title: "Test Publication")
+    image = FactoryBot.create(:image, edition: edition, alt_text: "Test alt text", caption: "")
+
+    Thor::Shell::Basic.any_instance.stubs(:yes?).returns(false)
+
+    output = capture_io do
+      @task.invoke
+    end
+
+    image.reload
+    assert_equal "Test alt text", image.alt_text, "Alt text should remain unchanged when migration is aborted"
+    assert_equal "", image.caption, "Caption should remain unchanged when migration is aborted"
+
+    assert_includes output[0], "DRY RUN PREVIEW", "Should show dry run preview"
+    assert_includes output[0], "Migration aborted by user", "Should show abort message"
+  end
+
+  test "task proceeds with migration when confirmed" do
+    edition = FactoryBot.create(:draft_publication, title: "Test Publication")
+    image = FactoryBot.create(:image, edition: edition, alt_text: "Test alt text", caption: "")
+
+    Thor::Shell::Basic.any_instance.stubs(:yes?).returns(true)
+
+    PublishingApiDocumentRepublishingWorker.expects(:perform_async).with(image.edition.document_id).once
+
+    output = capture_io do
+      @task.invoke
+    end
+
+    image.reload
+    assert_nil image.alt_text, "Alt text should be cleared after migration"
+    assert_equal "Test alt text", image.caption, "Caption should be updated"
+
+    assert_includes output[0], "DRY RUN PREVIEW", "Should show dry run preview"
+    assert_includes output[0], "RUNNING MIGRATION", "Should show migration execution"
+    assert_includes output[0], "Migration complete!", "Should show completion message"
+  end
+
+  test "republishes document when caption changes" do
+    edition = FactoryBot.create(:draft_publication)
+    image = FactoryBot.create(:image, edition: edition, alt_text: "New caption content", caption: "")
+
+    PublishingApiDocumentRepublishingWorker.expects(:perform_async).with(edition.document_id).once
+
+    @task.invoke
+
+    image.reload
+    assert_nil image.alt_text, "Alt text should be cleared"
+    assert_equal "New caption content", image.caption
+  end
+
+  test "does not republish document when caption unchanged" do
+    edition = FactoryBot.create(:draft_publication)
+    image = FactoryBot.create(:image, edition: edition, alt_text: "Same content", caption: "Same content")
+
+    PublishingApiDocumentRepublishingWorker.expects(:perform_async).never
+
+    @task.invoke
+
+    image.reload
+    assert_nil image.alt_text, "Alt text should be cleared"
+    assert_equal "Same content", image.caption
   end
 end
