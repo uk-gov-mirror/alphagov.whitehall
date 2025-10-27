@@ -39,7 +39,7 @@ module ConfigurableContentBlocks
   private
 
     def default_lead_image_url
-      default_lead_image&.url(:s300)
+      default_lead_image&.url(:s300) if default_lead_image&.all_asset_variants_uploaded?
     end
 
     def placeholder_image_url
