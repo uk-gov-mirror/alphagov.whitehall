@@ -8,6 +8,7 @@ class Admin::EditionActionsHelperTest < ActionView::TestCase
                  "Corporate information pages",
                  "Detailed guidances",
                  "Document collections",
+                 "History pages",
                  "News articles",
                  "Publications",
                  "Speeches",
