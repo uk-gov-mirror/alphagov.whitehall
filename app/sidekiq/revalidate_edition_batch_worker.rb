@@ -4,7 +4,13 @@ class RevalidateEditionBatchWorker
 
   def perform(edition_ids)
     Edition.where(id: edition_ids).find_each do |edition|
-      edition.valid?(:publish) # revalidates the edition and updates `revalidated_at`
+      if edition.unpublished?
+        if edition.unpublishing.valid?
+          edition.update_column(:revalidated_at, Time.zone.now)
+        end
+      else
+        edition.valid?(:publish) # revalidates the edition and updates `revalidated_at`
+      end
     end
   end
 end
