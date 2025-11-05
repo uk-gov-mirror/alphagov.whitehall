@@ -1,6 +1,11 @@
 require "test_helper"
 
 class Edition::IdentifiableTest < ActiveSupport::TestCase
+  setup do
+    @user = create(:user)
+    Current.user = @user
+  end
+
   test "should set document type on document before validation for use in slug duplicate detection" do
     publication = build(:publication)
     publication.valid?
@@ -140,5 +145,55 @@ class Edition::IdentifiableTest < ActiveSupport::TestCase
       edition.update!(title: "Title updated")
       assert_equal edition.updated_at.to_i, edition.document.updated_at.to_i
     end
+  end
+
+  test "should not update slug if should_update_document_slug is false on a published edition" do
+    published_edition = create(:published_publication, title: "Original title")
+    original_slug = published_edition.document.slug
+
+    draft_edition = published_edition.create_draft(create(:writer))
+    draft_edition.update!(title: "New title", should_update_document_slug: false, change_note: "Changed title")
+
+    assert_equal original_slug, draft_edition.document.reload.slug
+  end
+
+  test "should update slug if should_update_document_slug is true on a published edition" do
+    published_edition = create(:published_publication, title: "Original title")
+
+    draft_edition = published_edition.create_draft(create(:writer))
+    draft_edition.update!(title: "New title", should_update_document_slug: true, change_note: "Changed title")
+
+    assert_equal "new-title", draft_edition.document.reload.slug
+  end
+
+  test "should create editorial remark when slug is updated" do
+    published_edition = create(:published_publication, title: "Original title")
+    draft_edition = published_edition.create_draft(create(:writer))
+
+    draft_edition.update!(title: "New title", should_update_document_slug: true, change_note: "Changed title")
+    editorial_remark = draft_edition.editorial_remarks.last
+
+    assert editorial_remark.present?
+    assert_match(/Title change created new slug:/, editorial_remark.body)
+    assert_match(/new-title/, editorial_remark.body)
+    assert_equal @user, editorial_remark.author
+  end
+
+  test "should not create editorial remark if slug does not change" do
+    publication = create(:draft_publication, title: "Original title")
+    initial_remark_count = publication.editorial_remarks.count
+
+    publication.should_update_document_slug = true
+    publication.update!(summary: "Updated summary")
+
+    assert_equal initial_remark_count, publication.editorial_remarks.count
+  end
+
+  test "should not create editorial remark if edition is the first draft" do
+    publication = create(:draft_publication, title: "Original title")
+    initial_remark_count = publication.editorial_remarks.count
+    publication.update!(title: "New title")
+
+    assert_equal initial_remark_count, publication.editorial_remarks.count
   end
 end
