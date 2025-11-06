@@ -15,15 +15,12 @@ class AttachmentData < ApplicationRecord
 
   before_save :update_file_attributes
 
+  validate :new_filename_blank
   validate :file_is_not_blank
   validate :file_is_not_empty
   validate :filename_is_unique
 
-  attr_accessor :attachable
-
-  belongs_to :replaced_by, class_name: "AttachmentData"
-  validate :cant_be_replaced_by_self
-  after_save :handle_to_replace_id
+  attr_accessor :attachable, :keep_or_replace, :new_filename
 
   OPENDOCUMENT_EXTENSIONS = %w[ODT ODP ODS].freeze
 
@@ -225,5 +222,9 @@ private
 
   def file_is_not_empty
     errors.add(:file, "is an empty file") if file.present? && file.file.zero_size?
+  end
+
+  def new_filename_blank
+    errors.add(:new_filename, :blank) if keep_or_replace == "keep" && new_filename.blank?
   end
 end

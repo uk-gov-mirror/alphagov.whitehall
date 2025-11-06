@@ -17,7 +17,46 @@
               <%= render "admin/shared/attachments/fields", form: attachment_fields, attachment:, attachable:, heading_size: "s", heading_level: 3, subheading_size: "m", name:, margin_bottom: 4 %>
 
               <%= attachment_fields.fields_for(:attachment_data, include_id: false) do |attachment_data_fields| %>
+                <% attachment_data = attachment.attachment_data %>
+
                 <%= hidden_field_tag "#{name}[attachment_data_attributes][to_replace_id]", attachment_data_fields.object.to_replace_id || attachment_data_fields.object.id %>
+
+                <% if attachment_data_fields.object.to_replace_id %>
+                  <% value = "#{attachment_data.filename_without_extension}_1.#{attachment_data.file_extension}" %>
+
+                  <%= render "govuk_publishing_components/components/radio", {
+                    heading: "Matching attachment filename",
+                    name: "#{name}[attachment_data_attributes][keep_or_replace]",
+                    id: "#{name}_attachment_data_keep_or_replace",
+                    heading_level: 3,
+                    items: [
+                      {
+                        value: "keep",
+                        text: "Keep both files",
+                        checked: true,
+                        conditional: render("govuk_publishing_components/components/input", {
+                            id: "#{name}_attachment_data_new_filename",
+                            name: "#{name}[attachment_data_attributes][new_filename]",
+                            label: {
+                              text: "Name for new file",
+                              bold: true,
+                            },
+                            value:,
+                          }
+                        ),
+                      },
+                      {
+                        value: "replace",
+                        text: "Replace the existing file",
+                      },
+                    ].concat(@bulk_upload.attachments.many? ? [
+                      {
+                        value: "cancel",
+                        text: "Cancel upload of this file but upload others",
+                      },
+                    ] : []),
+                  } %>
+                <% end %>
 
                 <%= hidden_field_tag "#{name}[attachment_data_attributes][file_cache]", attachment_data_fields.object.file_cache %>
               <% end %>

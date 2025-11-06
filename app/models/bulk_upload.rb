@@ -101,18 +101,34 @@ private
     attachment_attributes = attachment_params.except(:attachment_data_attributes)
     attachment_data_attributes = attachment_params.fetch(:attachment_data_attributes, {})
 
-    attachment = FileAttachment.find_by(id: attachment_attributes[:id]) || FileAttachment.new(attachment_params)
-    attachment.attributes = attachment_attributes.except(:id)
+    return if attachment_data_attributes[:keep_or_replace] == "cancel"
 
-    unless attachment.new_record?
-      attachment_data_attributes[:to_replace_id] = attachment.attachment_data.id
-    end
+    attachment = case attachment_data_attributes[:keep_or_replace]
+                 when "keep"
+                   if attachment_data_attributes[:new_filename].present?
+                     new_attachment = FileAttachment.new(**attachment_attributes.except(:id), attachment_data_attributes:)
 
-    attachment.attachment_data = AttachmentData.new(attachment_data_attributes)
+                     new_file = CarrierWave::SanitizedFile.new(new_attachment.attachment_data.file)
+                     new_file.move_to(File.join(File.dirname(new_file.file.path), new_attachment.attachment_data.new_filename))
 
-    attachment.attachment_data.attachable = @attachable
+                     new_attachment.attachment_data.file = new_file
+                     new_attachment
+                   else
+                     existing_attachment = FileAttachment.find_by(id: attachment_attributes[:id])
+                     existing_attachment.assign_attributes(**attachment_attributes.except(:id), attachment_data_attributes:)
+                     existing_attachment
+                   end
+                 when "replace"
+                   existing_attachment = FileAttachment.find_by(id: attachment_attributes[:id])
+                   existing_attachment.assign_attributes(attachment_attributes.except(:id))
+                   existing_attachment.build_attachment_data(**attachment_data_attributes, to_replace_id: existing_attachment.attachment_data.id)
+                   existing_attachment
+                 else
+                   FileAttachment.new(**attachment_attributes.except(:id), attachment_data_attributes:)
+                 end
 
     attachment.attachable = @attachable
+    attachment.attachment_data.attachable = @attachable
 
     attachment
   end

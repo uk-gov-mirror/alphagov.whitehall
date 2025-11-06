@@ -80,7 +80,7 @@ class BulkUploadTest < ActiveSupport::TestCase
     edition = create(:news_article, :with_file_attachment)
     existing = edition.attachments.first
     params = attachments_params(
-      [{ id: existing.id, title: "Title" }, { file: upload_fixture(existing.filename), attachable: edition }],
+      [{ id: existing.id, title: "Title" }, { file: upload_fixture(existing.filename), attachable: edition, keep_or_replace: "replace" }],
     )
     bulk_upload = BulkUpload.new(edition)
     bulk_upload.build_attachments_from_params(params)
@@ -108,12 +108,12 @@ class BulkUploadTest < ActiveSupport::TestCase
     end
   end
 
-  test "#save_attachments updates existing attachments" do
+  test "#save_attachments updates existing attachments if replacement selected" do
     edition = create(:news_article, :with_file_attachment)
     existing = edition.attachments.first
     new_title = "New title for existing attachment"
     params = attachments_params(
-      [{ id: existing.id, title: new_title }, { file: upload_fixture(existing.filename) }],
+      [{ id: existing.id, title: new_title }, { file: upload_fixture(existing.filename), keep_or_replace: "replace" }],
     )
 
     bulk_upload = BulkUpload.new(edition)
@@ -122,6 +122,22 @@ class BulkUploadTest < ActiveSupport::TestCase
     bulk_upload.save_attachments
     assert_equal 1, edition.attachments.length
     assert_equal new_title, edition.attachments.reload.first.title
+  end
+
+  test "#save_attachments creates new attachment if existing attachment found and keep both selected" do
+    edition = create(:news_article, :with_file_attachment)
+    existing = edition.attachments.first
+    new_title = "New title for attachment"
+    params = attachments_params(
+      [{ id: existing.id, title: new_title }, { file: upload_fixture(existing.filename), keep_or_replace: "keep", new_filename: "new_filename.pdf" }],
+    )
+
+    bulk_upload = BulkUpload.new(edition)
+    bulk_upload.build_attachments_from_params(params)
+
+    bulk_upload.save_attachments
+    assert_equal 2, edition.attachments.reload.length
+    assert_equal new_title, edition.attachments.reload.second.title
   end
 
   test "#save_attachments does not save any attachments if one is invalid" do
