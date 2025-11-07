@@ -38,3 +38,7 @@ Feature: Publications
     When I visit the list of documents awaiting review
     And I view the publication "Legalise beards"
     And I should see a link to the PDF attachment
+    
+  Scenario: Viewing an edition's summary page shows the edition path
+    When I start drafting a new publication "My Publication"
+    Then I should see the path "/government/publications/my-publication" on the edition summary page

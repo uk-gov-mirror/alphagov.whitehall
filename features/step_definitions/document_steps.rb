@@ -169,3 +169,8 @@ When(/^I check "([^"]*)" adheres to the consultation principles$/) do |title|
   edition.read_consultation_principles = true
   edition.save!
 end
+
+Then(/^I should see the path "([^"]*)" on the edition summary page$/) do |path|
+  assert_selector ".app-view-summary__section .govuk-summary-list__row:nth-child(5) .govuk-summary-list__key", text: "Path"
+  assert_selector ".app-view-summary__section .govuk-summary-list__row:nth-child(5) .govuk-summary-list__value", text: path
+end
