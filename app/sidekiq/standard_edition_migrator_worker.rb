@@ -14,6 +14,7 @@ class StandardEditionMigratorWorker < WorkerBase
       document = Document.find(document_id)
       migrate_editions!(document)
       document.update_column(:document_type, "StandardEdition")
+      PublishingApiDocumentRepublishingWorker.new.perform(document.id, true)
     end
   end
 
