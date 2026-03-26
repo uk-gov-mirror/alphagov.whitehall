@@ -2,8 +2,6 @@ require "test_helper"
 
 class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
   setup do
-    @social_media_service_1 = create(:social_media_service, name: "Facebook")
-    @social_media_service_2 = create(:social_media_service, name: "LinkedIn")
     @validator = SocialMediaLinksValidator.new({
       attributes: %w[social_media_links],
       fields: {
@@ -25,7 +23,7 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
     assert block_content.errors.empty?
   end
 
-  test "social media links are invalid when none of social media service and URL are provided" do
+  test "social media links are invalid when both channel and URL are blank" do
     block_content = SocialMediaLinksValidatorTestClass.new
     block_content.social_media_links = [
       { "social_media_service_name" => "", "url" => "" },
@@ -35,7 +33,7 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
     assert_equal ["Social media links contains an account (\"Social media account 1\") without a service selected."], block_content.errors.full_messages
   end
 
-  test "social media links are invalid when no social media service is chosen and a URL is provided" do
+  test "social media links are invalid when no channel is chosen and a URL is provided" do
     block_content = SocialMediaLinksValidatorTestClass.new
     block_content.social_media_links = [
       { "social_media_service_name" => "", "url" => "https://facebook.com" },
@@ -45,7 +43,7 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
     assert_equal ["Social media links contains an account (\"Social media account 1\") without a service selected."], block_content.errors.full_messages
   end
 
-  test "social media links are invalid when a social media service is chosen but no URL is provided" do
+  test "social media links are invalid when a channel is chosen but no URL is provided" do
     block_content = SocialMediaLinksValidatorTestClass.new
     block_content.social_media_links = [
       { "social_media_service_name" => "Facebook", "url" => "" },
@@ -55,7 +53,7 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
     assert_equal ["Social media links contains a \"Facebook\" account without a URL."], block_content.errors.full_messages
   end
 
-  test "social media links are invalid when a social media service is chosen and a malformed URL is provided" do
+  test "social media links are invalid when a channel is chosen and a malformed URL is provided" do
     block_content = SocialMediaLinksValidatorTestClass.new
     block_content.social_media_links = [
       { "social_media_service_name" => "Facebook", "url" => "not-a-url" },
@@ -66,7 +64,7 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
     assert_equal ["Social media links contains a \"Facebook\" account with an invalid URL - use the full URL, including https://"], block_content.errors.full_messages
   end
 
-  test "social media links are invalid if two of the same social media service are provided" do
+  test "social media links are invalid if two of the same channel are provided" do
     block_content = SocialMediaLinksValidatorTestClass.new
     block_content.social_media_links = [
       { "social_media_service_name" => "Facebook", "url" => "http://facebook.com/govuk" },
@@ -77,7 +75,7 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
     assert_equal ["Social media links contains another account with a service of \"Facebook\"."], block_content.errors.full_messages
   end
 
-  test "social media links are invalid if two services have the same URL" do
+  test "social media links are invalid if two channels have the same URL" do
     block_content = SocialMediaLinksValidatorTestClass.new
     block_content.social_media_links = [
       { "social_media_service_name" => "Twiter", "url" => "http://facebook.com/govuk" },
@@ -88,7 +86,7 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
     assert_equal ["Social media links already has an account with a URL of \"http://facebook.com/govuk\"."], block_content.errors.full_messages
   end
 
-  test "social media links are valid when multiple 'Other' services are provided with different URLs" do
+  test "social media links are valid when multiple 'Other' channels are provided with different URLs" do
     block_content = SocialMediaLinksValidatorTestClass.new
     block_content.social_media_links = [
       { "social_media_service_name" => "Other", "url" => "http://example.com/one" },
@@ -99,7 +97,7 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
     assert block_content.errors.empty?
   end
 
-  test "social media links are valid when a social media service is chosen and a well-formed URL is provided" do
+  test "social media links are valid when a channel is chosen and a well-formed URL is provided" do
     block_content = SocialMediaLinksValidatorTestClass.new
     block_content.social_media_links = [
       { "social_media_service_name" => "Facebook", "url" => "http://facebook.com/govuk" },
