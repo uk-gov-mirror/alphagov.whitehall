@@ -14,6 +14,18 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
   class SocialMediaLinksValidatorTestClass
     include ActiveModel::API
     attr_accessor :social_media_links
+
+    # Errors are added with dotted attribute names e.g. :"social_media_links.0.url".
+    # Rails tries to call these as methods, which would raise NoMethodError since dots
+    # aren't valid in Ruby method names. BlockContent handles this in production; we
+    # replicate it here.
+    def method_missing(method_name, *args)
+      method_name.to_s.include?(".") ? nil : super
+    end
+
+    def respond_to_missing?(method_name, include_private = false)
+      method_name.to_s.include?(".") || super
+    end
   end
 
   test "empty social media links are valid" do
@@ -30,7 +42,8 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
     ]
     @validator.validate(block_content)
 
-    assert_equal ["Social media links contains an account (\"Social media account 1\") without a service selected."], block_content.errors.full_messages
+    assert_includes block_content.errors[:"social_media_links.0.social_media_service_name"], "cannot be blank"
+    assert_includes block_content.errors[:"social_media_links.0.url"], "cannot be blank"
   end
 
   test "social media links are invalid when no channel is chosen and a URL is provided" do
@@ -40,7 +53,8 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
     ]
     @validator.validate(block_content)
 
-    assert_equal ["Social media links contains an account (\"Social media account 1\") without a service selected."], block_content.errors.full_messages
+    assert_includes block_content.errors[:"social_media_links.0.social_media_service_name"], "cannot be blank"
+    assert_empty block_content.errors[:"social_media_links.0.url"]
   end
 
   test "social media links are invalid when a channel is chosen but no URL is provided" do
@@ -50,18 +64,29 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
     ]
     @validator.validate(block_content)
 
-    assert_equal ["Social media links contains a \"Facebook\" account without a URL."], block_content.errors.full_messages
+    assert_empty block_content.errors[:"social_media_links.0.social_media_service_name"]
+    assert_includes block_content.errors[:"social_media_links.0.url"], "cannot be blank"
   end
 
   test "social media links are invalid when a channel is chosen and a malformed URL is provided" do
     block_content = SocialMediaLinksValidatorTestClass.new
     block_content.social_media_links = [
       { "social_media_service_name" => "Facebook", "url" => "not-a-url" },
-      { "social_media_service_name" => "Twitter", "url" => "http://linkedin.com" },
     ]
     @validator.validate(block_content)
 
-    assert_equal ["Social media links contains a \"Facebook\" account with an invalid URL - use the full URL, including https://"], block_content.errors.full_messages
+    assert_includes block_content.errors[:"social_media_links.0.url"], "is invalid - use the full URL, including https://"
+  end
+
+  test "social media links are invalid when no channel is chosen and a malformed URL is provided" do
+    block_content = SocialMediaLinksValidatorTestClass.new
+    block_content.social_media_links = [
+      { "social_media_service_name" => "", "url" => "not-a-url" },
+    ]
+    @validator.validate(block_content)
+
+    assert_includes block_content.errors[:"social_media_links.0.social_media_service_name"], "cannot be blank"
+    assert_includes block_content.errors[:"social_media_links.0.url"], "is invalid - use the full URL, including https://"
   end
 
   test "social media links are invalid if two of the same channel are provided" do
@@ -72,18 +97,20 @@ class SocialMediaLinksValidatorTest < ActiveSupport::TestCase
     ]
     @validator.validate(block_content)
 
-    assert_equal ["Social media links contains another account with a service of \"Facebook\"."], block_content.errors.full_messages
+    assert_empty block_content.errors[:"social_media_links.0.social_media_service_name"]
+    assert_includes block_content.errors[:"social_media_links.1.social_media_service_name"], "must be unique"
   end
 
   test "social media links are invalid if two channels have the same URL" do
     block_content = SocialMediaLinksValidatorTestClass.new
     block_content.social_media_links = [
-      { "social_media_service_name" => "Twiter", "url" => "http://facebook.com/govuk" },
+      { "social_media_service_name" => "Twitter", "url" => "http://facebook.com/govuk" },
       { "social_media_service_name" => "Facebook", "url" => "http://facebook.com/govuk" },
     ]
     @validator.validate(block_content)
 
-    assert_equal ["Social media links already has an account with a URL of \"http://facebook.com/govuk\"."], block_content.errors.full_messages
+    assert_empty block_content.errors[:"social_media_links.0.url"]
+    assert_includes block_content.errors[:"social_media_links.1.url"], "must be unique"
   end
 
   test "social media links are valid when multiple 'Other' channels are provided with different URLs" do

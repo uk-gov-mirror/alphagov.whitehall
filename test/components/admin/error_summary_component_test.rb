@@ -153,6 +153,16 @@ class Admin::ErrorSummaryComponentTest < ViewComponent::TestCase
     assert_equal third_link.text, "Date label is invalid"
     assert_equal third_link[:href], "#labelled_error_summary_test_object_date"
   end
+
+  test "renders full_message for dotted attributes" do
+    object = DottedAttributeErrorSummaryTestObject.new("title", Time.zone.today)
+    object.errors.add(:"social_media_links.0.url", :blank, message: "cannot be blank")
+    render_inline(Admin::ErrorSummaryComponent.new(object:))
+
+    link = page.find(".gem-c-error-summary__list-item a")
+    assert_equal "Social media links 0 url cannot be blank", link.text
+    assert_equal "#dotted_attribute_error_summary_test_object_social_media_links_0_url", link[:href]
+  end
 end
 
 class ErrorSummaryTestObject
@@ -178,5 +188,15 @@ class LabelledErrorSummaryTestObject < ErrorSummaryTestObject
       "title" => "Title label",
       "date" => "Date label",
     }
+  end
+end
+
+class DottedAttributeErrorSummaryTestObject < ErrorSummaryTestObject
+  def method_missing(method_name, *args)
+    method_name.to_s.include?(".") ? nil : super
+  end
+
+  def respond_to_missing?(method_name, include_private = false)
+    method_name.to_s.include?(".") || super
   end
 end
