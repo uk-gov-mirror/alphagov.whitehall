@@ -26,13 +26,6 @@ class PublishingApiUnpublishingJob < JobBase
             allow_draft,
           )
         end
-      when UnpublishingReason::CONSOLIDATED_ID
-        PublishingApiRedirectJob.new.perform(
-          content_id,
-          unpublishing.alternative_path,
-          locale.to_s,
-          allow_draft,
-        )
       when UnpublishingReason::WITHDRAWN_ID
         PublishingApiWithdrawalJob.new.perform(
           content_id,
@@ -40,6 +33,21 @@ class PublishingApiUnpublishingJob < JobBase
           locale.to_s,
           allow_draft,
           unpublishing.unpublished_at.to_s,
+        )
+      when UnpublishingReason::CONSOLIDATED_ID
+        PublishingApiRedirectJob.new.perform(
+          content_id,
+          unpublishing.alternative_path,
+          locale.to_s,
+          allow_draft,
+        )
+      when UnpublishingReason::ARCHIVED_ID
+        PublishingApiGoneJob.new.perform(
+          content_id,
+          unpublishing.alternative_path,
+          unpublishing.explanation,
+          locale.to_s,
+          allow_draft,
         )
       end
     end
