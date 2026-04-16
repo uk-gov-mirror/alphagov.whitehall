@@ -1,5 +1,9 @@
- <li class="govuk-grid-row">
-  <div class="govuk-grid-column-one-third">
+ <li data-module="image-processing-checker" data-image-link="<%= admin_edition_image_path(edition, image) %>" class="govuk-grid-row">
+  <template id="image-preview">
+    <img src="<%= image.thumbnail %>" alt="" class="app-view-edition-resource__preview">
+  </template>
+
+  <div class="govuk-grid-column-one-third js-image-processing-status">
     <% if image.image_data&.original_uploaded? && image.thumbnail %>
       <img src="<%= image.thumbnail %>" alt="" class="app-view-edition-resource__preview">
     <% else %>
