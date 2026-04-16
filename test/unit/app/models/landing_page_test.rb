@@ -6,20 +6,19 @@ class LandingPageTest < ActiveSupport::TestCase
   should_protect_against_xss_and_content_attacks_on :landing_page, :body
 
   test "landing-page base_path is not overwritten from title" do
-    landing_page = build(:landing_page, slug_override: "/landing-page/test")
+    landing_page = build(:landing_page, slug: "/landing-page/test")
     assert_equal landing_page.base_path, "/landing-page/test"
   end
 
-  test "landing-page is not valid if base_path is already in use" do
+  test "landing-page is not valid if slug_override is already in use" do
     create(:landing_page, slug_override: "/landing-page/test")
-
     landing_page = build(:landing_page, slug_override: "/landing-page/test")
     assert_not landing_page.valid?
-    assert_equal :base_path, landing_page.errors.first.attribute
+    assert_equal :slug_override, landing_page.errors.first.attribute
   end
 
-  test "landing-page is not valid if base_path does not start with a slash" do
-    landing_page = build(:landing_page, body: "blocks: []", slug_override: "/landing-page/test")
+  test "landing-page is not valid if slug_override does not start with a slash" do
+    landing_page = build(:landing_page, body: "blocks: []", slug_override: "landing-page/test")
     assert_not landing_page.valid?
   end
 
