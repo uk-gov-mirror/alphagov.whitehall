@@ -4,7 +4,6 @@ ParameterType(
   transformer: ->(section) { section },
 )
 module TopicalEventsHelper
-
   def stub_topical_event_in_content_store(name)
     content_item = {
       format: "topical_event",
