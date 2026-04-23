@@ -684,6 +684,13 @@ class EditionTest < ActiveSupport::TestCase
 
     assert edition.invalid?
   end
+  test "first_published_at dates in the future only generate one error message" do
+    edition_with_change_note = create(:edition_with_document, :published, change_note: "changed", major_change_published_at: 2.days.ago)
+    edition = build(:edition, document: edition_with_change_note.document, first_published_at: 10.years.from_now)
+    edition.validate
+
+    assert_equal 1, edition.errors.size
+  end
 
   test "#government returns the associated government when the edition has a specific government_id" do
     create(:current_government)
