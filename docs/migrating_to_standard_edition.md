@@ -89,4 +89,33 @@ With that in mind, the steps for migrating a legacy content type to being config
 
 ### The legacy content type does not use the Edition model
 
-You'll need to perform a bespoke migration.
+If the legacy content type doesn't use the Edition model (e.g. `TopicalEvent`), you can still use the `StandardEditionMigrator` — just pass a scope of the legacy records directly rather than a `Document` scope.
+
+For each record in scope, the migrator creates a brand new `Document` and `StandardEdition`. The original record is left untouched, so you can remove it manually afterwards (or leave the two co-existing for a while if that's useful).
+
+The recipe works the same way as for editionable content types, with three differences:
+
+- Implement `StandardEditionMigrator.recipe_for_non_editionable` instead of `recipe_for`
+- Define `map_non_editionable_to_block_content(record, translation)` instead of `map_legacy_fields_to_block_content` — the arguments reflect that you're working with a plain record rather than an edition
+- Add `title(record)` and `summary(record)` methods, since there's no existing edition to copy those from
+
+Everything else — `presenter`, `configurable_document_type`, and the `ignore_*` methods — works identically to the editionable recipe.
+
+The steps from there are the same as above. To preview:
+
+```ruby
+StandardEditionMigrator.new(scope: TopicalEvent.all).preview
+```
+
+To migrate a handful locally first:
+
+```ruby
+StandardEditionMigrator.new(scope: TopicalEvent.first(5)).migrate!(compare_payloads: true, republish: false)
+```
+
+Or to call the job directly for a single record:
+
+```ruby
+StandardEditionMigratorJob.new.perform(topical_event.id, { "model_class" => "TopicalEvent", "republish" => false, "compare_payloads" => true })
+```
+
