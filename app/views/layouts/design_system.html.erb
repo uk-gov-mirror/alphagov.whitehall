@@ -67,29 +67,47 @@
         </div>
       <% end %>
 
-      <% if yield(:title).present? %>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-<%= column_width %>">
-            <%
-              heading_options = {
-                context: yield(:context),
-                text: yield(:title),
-                heading_level: 1,
-                font_size: "xl",
-              }
-              heading_options[:margin_bottom] = yield(:title_margin_bottom).present? ? yield(:title_margin_bottom).to_i : 8
-            %>
-            <%= render "govuk_publishing_components/components/heading", heading_options %>
-          </div>
+      <div class="content-container">
 
-          <% if yield(:page_full_width).blank? %>
-            <div class="govuk-grid-column-one-third app-grid-column--align-right">
-              <%= yield(:title_side) %>
+        <% parent_edition = get_parent_edition(@edition) %>
+
+        <% if parent_edition.present? %>
+          <div class="govuk-grid-row app-child-of-banner-container">
+            <div class="govuk-grid-column-two-thirds">
+              <%= render "components/child_of_banner", {
+                title: "#{parent_edition.title} #{parent_edition.display_type.downcase}",
+                path: admin_edition_path(parent_edition),
+                margin_bottom: 8,
+              } %>
             </div>
-          <% end %>
-        </div>
-      <% end %>
-      <%= yield %>
+          </div>
+        <% end %>
+  
+        <% if yield(:title).present? %>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-<%= column_width %>">
+              <%
+                heading_options = {
+                  context: yield(:context),
+                  text: yield(:title),
+                  heading_level: 1,
+                  font_size: "xl",
+                }
+                heading_options[:margin_bottom] = yield(:title_margin_bottom).present? ? yield(:title_margin_bottom).to_i : 8
+              %>
+              <%= render "govuk_publishing_components/components/heading", heading_options %>
+            </div>
+  
+            <% if yield(:page_full_width).blank? %>
+              <div class="govuk-grid-column-one-third app-grid-column--align-right">
+                <%= yield(:title_side) %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        <%= yield %>
+
+      </div>
     </main>
   <% end %>
 
