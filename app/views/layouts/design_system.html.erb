@@ -82,7 +82,7 @@
             </div>
           </div>
         <% end %>
-  
+
         <% if yield(:title).present? %>
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-<%= column_width %>">
@@ -97,7 +97,7 @@
               %>
               <%= render "govuk_publishing_components/components/heading", heading_options %>
             </div>
-  
+
             <% if yield(:page_full_width).blank? %>
               <div class="govuk-grid-column-one-third app-grid-column--align-right">
                 <%= yield(:title_side) %>
