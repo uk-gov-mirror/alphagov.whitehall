@@ -161,5 +161,7 @@ module ApplicationHelper
 
       edition.parent_edition
     end
+  rescue ActiveRecord::RecordNotFound
+    nil
   end
 end
