@@ -338,6 +338,40 @@ class Admin::OrganisationsControllerTest < ActionController::TestCase
     assert_match(/The image is being processed. Try refreshing the page./, flash[:notice])
   end
 
+  view_test "GET on :edit shows the homepage position and featured links fields to a managing editor" do
+    organisation = create(:organisation)
+    login_as(create(:managing_editor, organisation:))
+
+    get :edit, params: { id: organisation }
+
+    assert_select "#organisation_homepage_type"
+    assert_select ".app-view-organisation__featured_links"
+  end
+
+  test "PUT on :update lets a managing editor change the homepage position and featured links" do
+    organisation = create(:organisation, homepage_type: "news")
+    featured_link = create(:featured_link, linkable: organisation)
+    login_as(create(:managing_editor, organisation:))
+
+    put :update,
+        params: {
+          id: organisation,
+          organisation: {
+            homepage_type: "service",
+            featured_links_attributes: { "0" => {
+              id: featured_link.id,
+              title: "New title",
+              url: featured_link.url,
+              _destroy: "false",
+            } },
+          },
+        }
+
+    assert_response :redirect
+    assert_equal "service", organisation.reload.homepage_type
+    assert_equal "New title", featured_link.reload.title
+  end
+
   view_test "GET on :show hides the Edit link from writers and departmental editors" do
     organisation = create(:organisation)
 
