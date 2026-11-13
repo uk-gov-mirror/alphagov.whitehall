@@ -190,14 +190,36 @@ class Admin::OrganisationTranslationsControllerTest < ActionController::TestCase
     end
   end
 
-  test "actions are allowed for users in the organisation" do
+  test "actions are allowed for managing editors in the organisation" do
     organisation = create(:organisation, translated_into: [:fr])
-    login_as(:writer, organisation)
+    login_as(:managing_editor, organisation)
 
     delete :destroy, params: { organisation_id: organisation, id: "fr" }
 
     assert_not organisation.reload.translated_locales.include?(:fr)
     assert_redirected_to admin_organisation_translations_path(organisation)
+  end
+
+  test "actions are forbidden for writers and departmental editors in the organisation" do
+    %i[writer departmental_editor].each do |role|
+      organisation = create(:organisation, translated_into: [:fr])
+      login_as(role, organisation)
+
+      post :create, params: { organisation_id: organisation, translation_locale: "es" }
+      assert_response :forbidden
+
+      put :update, params: { organisation_id: organisation, id: "fr", organisation: { name: "Nouveau" } }
+      assert_response :forbidden
+
+      delete :destroy, params: { organisation_id: organisation, id: "fr" }
+      assert_response :forbidden
+      assert organisation.reload.translated_locales.include?(:fr)
+
+      %i[edit confirm_destroy].each do |action|
+        get action, params: { organisation_id: organisation, id: "fr" }
+        assert_response :forbidden
+      end
+    end
   end
 
   test "update ignores identity changes from an unauthorised role, but saves their other changes" do
@@ -212,7 +234,7 @@ class Admin::OrganisationTranslationsControllerTest < ActionController::TestCase
       },
     )
     featured_link = create(:featured_link, linkable: organisation)
-    login_as(:writer, organisation)
+    login_as(:managing_editor, organisation)
 
     put :update,
         params: {
@@ -234,14 +256,14 @@ class Admin::OrganisationTranslationsControllerTest < ActionController::TestCase
       assert_equal "Bureau Afrolasie", organisation.name
       assert_equal "AFRO", organisation.acronym
       assert_equal "Bureau Afrolasie", organisation.logo_formatted_name
-      assert_equal "Cliquez ici", organisation.featured_links.first.title, "a writer should still be able to translate featured links"
+      assert_equal "Cliquez ici", organisation.featured_links.first.title, "a managing editor should still be able to translate featured links"
     end
 
     assert_redirected_to admin_organisation_translations_path(organisation)
   end
 
-  test "update does not let a writer change the English name by passing the en locale" do
-    login_as(:writer, @organisation)
+  test "update does not let a managing editor change the English name by passing the en locale" do
+    login_as(:managing_editor, @organisation)
 
     put :update,
         params: {
@@ -257,7 +279,7 @@ class Admin::OrganisationTranslationsControllerTest < ActionController::TestCase
 
   view_test "edit puts the identity fields in a disabled fieldset for an unauthorised role" do
     organisation = create(:organisation, translated_into: [:fr])
-    login_as(:writer, organisation)
+    login_as(:managing_editor, organisation)
 
     get :edit, params: { organisation_id: organisation, id: "fr" }
 
@@ -291,5 +313,21 @@ class Admin::OrganisationTranslationsControllerTest < ActionController::TestCase
     refute_select "a[href=?]", edit_admin_organisation_translation_path(organisation, "fr")
     refute_select "a[href=?]", confirm_destroy_admin_organisation_translation_path(organisation, "fr")
     refute_select "form[action=?]", admin_organisation_translations_path(organisation)
+  end
+
+  view_test "index keeps the View link but hides actions from writers and departmental editors in the organisation" do
+    organisation = create(:organisation, translated_into: [:fr])
+
+    %i[writer departmental_editor].each do |role|
+      login_as(role, organisation)
+
+      get :index, params: { organisation_id: organisation }
+
+      assert_response :success
+      assert_select "a", text: /View/
+      refute_select "a[href=?]", edit_admin_organisation_translation_path(organisation, "fr")
+      refute_select "a[href=?]", confirm_destroy_admin_organisation_translation_path(organisation, "fr")
+      refute_select "form[action=?]", admin_organisation_translations_path(organisation)
+    end
   end
 end

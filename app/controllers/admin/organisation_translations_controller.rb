@@ -47,6 +47,6 @@ private
   end
 
   def enforce_permissions!
-    enforce_permission!(:edit, @organisation)
+    enforce_permission!(:edit_details, @organisation)
   end
 end
